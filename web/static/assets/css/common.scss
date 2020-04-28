@@ -1,0 +1,36 @@
+@import '~@/assets/css/colorCommon';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  color: $font_base_color;
+  font-size: 1.6rem;
+  font-family: 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+}
+
+input {
+  border: 0.1rem solid $form_border_color;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+input:focus {
+  border: 0.1rem solid $form_border_color_focused;
+  transition: all 0.2s ease;
+}
+
+:root {
+  --page-sub-title-font-size: 1.2rem;
+}
+
+a {
+  color: #0044a0;
+}

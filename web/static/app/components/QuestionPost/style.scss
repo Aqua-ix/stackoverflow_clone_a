@@ -1,0 +1,24 @@
+@import '~@/assets/css/commonStyle';
+@import '~@/assets/css/buttonCommonStyle';
+
+.main {
+  width: 80%;
+  margin: 3rem auto auto;
+}
+
+.formGroup {
+  margin-bottom: 1rem;
+}
+
+.titleEdit {
+  height: calc(1.5em + 0.75rem + 0.2rem);
+}
+
+.bodyEdit {
+  height: 14rem !important;
+}
+
+.label {
+  display: inline-block;
+  margin-bottom: 1rem;
+}

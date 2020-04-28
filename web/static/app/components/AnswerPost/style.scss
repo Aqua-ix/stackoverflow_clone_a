@@ -1,0 +1,18 @@
+@import '~@/assets/css/commonStyle';
+@import '~@/assets/css/buttonCommonStyle';
+
+.formGroup {
+  margin-bottom: 1rem;
+}
+
+.title {
+  margin-bottom: 2rem;
+  overflow: hidden;
+  font-weight: bold;
+  font-size: 1.8rem;
+  text-overflow: ellipsis;
+}
+
+.edit {
+  height: 7rem !important;
+}

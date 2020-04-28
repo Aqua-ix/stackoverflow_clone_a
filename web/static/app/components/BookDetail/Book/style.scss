@@ -1,0 +1,38 @@
+@import '~@/assets/css/commonStyle';
+@import '~@/assets/css/buttonCommonStyle';
+
+.contentArea {
+  flex-grow: 1;
+}
+
+.question {
+  margin-bottom: 2rem;
+}
+
+.infoArea {
+  width: 3rem;
+  margin: 0 2rem 0 1rem;
+}
+
+.mainArea {
+  display: flex;
+}
+
+.titleEdit {
+  height: calc(1.5em + 0.75rem + 0.2rem);
+}
+
+.authorEdit {
+  height: calc(1.5em + 0.75rem + 0.2rem);
+}
+
+.author {
+  box-sizing: border-box;
+  margin-bottom: 2rem;
+  font-weight: bold;
+  font-size: 1.8rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  text-align: left;
+  word-break: break-all;
+}

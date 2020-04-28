@@ -1,0 +1,65 @@
+@import '~@/assets/css/commonStyle';
+@import '~@/assets/css/colorCommon';
+
+.main {
+  width: 50rem;
+  margin: 10% auto auto;
+  background-color: $login_form_background-color;
+}
+
+.label {
+  margin-top: 1rem;
+  font-size: 1.3rem;
+}
+
+.errorLabel {
+  display: inline-block;
+  margin-left: 1rem;
+  color: $font_error_color;
+  font-size: 1.3rem;
+}
+
+.loginError {
+  width: 30rem;
+  height: 3rem;
+  margin-left: 1rem;
+  color: $font_error_color;
+  font-size: 1.3rem;
+  text-align: center;
+}
+
+.input {
+  display: block;
+  width: 30rem;
+  padding: 0.3rem 1rem;
+  font-size: 1.4rem;
+}
+
+.marginLeft {
+  margin-left: 10rem;
+}
+
+.loginButton {
+  position: relative;
+  display: inline-block;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  margin-left: 10.8rem;
+  padding: 0.25em 0.5em;
+  color: $login_form_button_font_color;
+  font-weight: bold;
+  text-decoration: none;
+  background: $login_form_button_background_color;
+  border: solid 0.2rem $login_form_button_border_color;
+  border-radius: 0.4rem;
+  box-shadow: inset 0 0.2rem 0 rgba(255, 255, 255, 0.2), inset 0 -0.2rem 0 rgba(0, 0, 0, 0.05);
+}
+
+.loginButton:active {
+  box-shadow: 0 0 0.2rem rgba(0, 0, 0, 0.3);
+}
+
+.loginButton:disabled {
+  background: $button_disabled_background;
+  border: solid 0.2rem $button_disabled_border;
+}

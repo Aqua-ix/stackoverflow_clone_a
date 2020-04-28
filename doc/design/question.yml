@@ -1,0 +1,48 @@
+_id:
+  description: "ID of a Question"
+  type: string
+createdAt:
+  description: "ISO8601 timestamp of the creation time of this document"
+  type: string
+data:
+  type: object
+  required: ["title", "body", "userId", "comments", "likeVoterIds", "dislikeVoterIds"]
+  properties:
+    title:
+      description: "Title of a question"
+      type: string
+    body:
+      description: "Body of a question"
+      type: string
+    userId:
+      description: "ID of user who post this question"
+      type: string
+    comments:
+      description: "comments of this question"
+      type: array
+      items:
+        type: object
+        required: ["_id", "body", "userId", "createdAt"]
+        properties:
+          _id:
+            description: "ID of this comment"
+            type: string
+          body:
+            description: "Body of comment"
+            type: string
+          userId:
+            description: "ID of user who post this comment"
+            type: string
+          createdAt:
+            description: "ISO8601 timestamp of the time when this comment is posted"
+            type: string
+    likeVoterIds:
+      description: "List of ID of user who liked it"
+      type: array
+        items:
+          type: string
+    dislikeVoterIds:
+      description: "List of ID of user who disliked it"
+      type: array
+        items:
+          type: string

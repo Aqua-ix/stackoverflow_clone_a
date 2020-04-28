@@ -1,0 +1,38 @@
+_id:
+  description: "ID of an Answer"
+  type: string
+createdAt:
+  description: "ISO8601 timestamp of the creation time of this document"
+  type: string
+data:
+  type: object
+  required: ["questionId", "body", "userId", "comments"]
+  properties:
+    questionId:
+      description: "ID of an answer"
+      type: string
+    body:
+      description: "Body of an answer"
+      type: string
+    userId:
+      description: "ID of user who post this answer"
+      type: string
+    comments:
+      description: "comments of this answer"
+      type: array
+      items:
+        type: object
+        required: ["_id", "body", "userId", "createdAt"]
+        properties:
+          _id:
+            description: "ID of this comment"
+            type: string
+          body:
+            description: "Body of this comment"
+            type: string
+          userId:
+            description: "ID of user who post this comment"
+            type: string
+          createdAt:
+            description: "ISO8601 timestamp of the time when this comment is posted"
+            type: string

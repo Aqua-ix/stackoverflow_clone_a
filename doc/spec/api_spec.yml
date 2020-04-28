@@ -1,0 +1,907 @@
+swagger: '2.0'
+info:
+  version: 0.0.1
+  title: Rest API of StackoverflowCloneA gear
+host: stackoverflow-clone.solomondev.access-company.com
+basePath: /v1
+schemes:
+  - https
+security:
+  - UserCredential: []
+securityDefinitions:
+  UserCredential:
+    type: apiKey
+    in: header
+    name: Authorization
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /question:
+    get:
+      tags:
+        - question
+      summary: Retrieve a list of `Question`
+      description: Returns a list of `Question`
+      security:
+        - UserCredential: []
+      operationId: retrieveQuestionList
+      parameters:
+        - in: query
+          name: user_id
+          description: "If `user_id` is specified, the question that can be retrieved is restricted to those with `user_id` specified values"
+          required: false
+          type: string
+      responses:
+        200:
+          description: Return a list of `Question`
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/question'
+        400:
+          description: The request parameter is invalid.
+          schema:
+            $ref: '#/definitions/badRequestError'
+    post:
+      tags:
+        - question
+      summary: Create a `Question`
+      description: Create a `Question`
+      security:
+        - UserCredential: []
+      operationId: createQuestion
+      parameters:
+        - in: header
+          name: authorization
+          description: User credential
+          required: true
+          type: string
+        - in: body
+          name: createQuestionBody
+          required: true
+          schema:
+            type: object
+            required:
+              ["title", "body"]
+            properties:
+              title:
+                description: Title of a `Question`
+                type: string
+                minLength: 1
+                maxLength: 100
+              body:
+                description: Body of a `Question`
+                type: string
+                minLength: 1
+                maxLength: 3000
+            example:
+              title: "title"
+              body: "body"
+      responses:
+        200:
+          description: create a `Question`
+          schema:
+            $ref: '#/definitions/question'
+        400:
+          description: The request body is invalid.
+          schema:
+            $ref: '#/definitions/badRequestError'
+        401:
+          description: Credential is invalid or missing.
+          schema:
+            $ref: '#/definitions/badRequestError'
+  /question/{id}:
+    get:
+      tags:
+        - question
+      summary: Retrieve a `Question`
+      description: Returns a `Question`
+      security:
+        - UserCredential: []
+      operationId: retrieveQuestion
+      parameters:
+        - in: path
+          name: id
+          description: "ID of `Question`"
+          required: true
+          type: string
+      responses:
+        200:
+          description: Return a `Question`
+          schema:
+            $ref: '#/definitions/question'
+        404:
+          description: Specified `Question` is not found.
+          schema:
+            $ref: '#/definitions/resourceNotFoundError'
+    put:
+      tags:
+        - question
+      summary: Update a `Question`
+      description: Update a `Question`
+      security:
+        - UserCredential: []
+      operationId: updateQuestion
+      parameters:
+        - in: header
+          name: authorization
+          description: User credential
+          required: true
+          type: string
+        - in: path
+          name: id
+          description: "ID of `Question`"
+          required: true
+          type: string
+        - in: body
+          name: updateQuestionBody
+          required: true
+          schema:
+            type: object
+            properties:
+              title:
+                description: Title of a `Question`
+                type: string
+                minLength: 1
+                maxLength: 100
+              body:
+                description: Body of a `Question`
+                type: string
+                minLength: 1
+                maxLength: 3000
+            example:
+              title: "title"
+              body: "body"
+      responses:
+        200:
+          description: Update a `Question`
+          schema:
+            $ref: '#/definitions/question'
+        401:
+          description: Credential is invalid or missing. Or poster of this Question is different of login user.
+          schema:
+            $ref: '#/definitions/invalidCredentialError'
+        404:
+          description: Specified `Question` is not found.
+          schema:
+            $ref: '#/definitions/resourceNotFoundError'
+  /answer:
+    get:
+      tags:
+        - answer
+      summary: Retrieve a list of `Answer`
+      description: Returns a list of `Answer`
+      security:
+        - UserCredential: []
+      operationId: retrieveAnswerList
+      parameters:
+        - in: query
+          name: user_id
+          description: "If `user_id` is specified, the answer that can be retrieved is restricted to those with `user_id` specified values"
+          required: false
+          type: string
+        - in: query
+          name: question_id
+          description: "If `question_id` is specified, the answer that can be retrieved is restricted to those with `question_id` specified values"
+          required: false
+          type: string
+      responses:
+        200:
+          description: Return a list of `Answer`
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/answer'
+        400:
+          description: The request parameter is invalid.
+          schema:
+            $ref: '#/definitions/badRequestError'
+    post:
+      tags:
+        - answer
+      summary: Create a `Answer`
+      description: Create a `Answer`
+      security:
+        - UserCredential: []
+      operationId: createAnswer
+      parameters:
+        - in: header
+          name: authorization
+          description: User credential
+          required: true
+          type: string
+        - in: body
+          name: createAnswerBody
+          required: true
+          schema:
+            type: object
+            required: ["body", "question_id"]
+            properties:
+              body:
+                description: Body of a `Answer`
+                type: string
+                minLength: 1
+                maxLength: 3000
+              question_id:
+                description: ID of the question that answered
+                type: string
+            example:
+              body: "body"
+              question_id: "xxxxxxxxxxxx"
+      responses:
+        200:
+          description: create a `Answer`
+          schema:
+            $ref: '#/definitions/answer'
+        400:
+          description: The request body is invalid.
+          schema:
+            $ref: '#/definitions/badRequestError'
+        401:
+          description: Credential is invalid or missing.
+          schema:
+            $ref: '#/definitions/invalidCredentialError'
+        404:
+          description: Specified `Question` is not found.
+          schema:
+            $ref: '#/definitions/resourceNotFoundError'
+  /answer/{id}:
+    get:
+      tags:
+        - answer
+      summary: Retrieve a `Answer`
+      description: Returns a `Answer`
+      security:
+        - UserCredential: []
+      operationId: retrieveAnswer
+      parameters:
+        - in: path
+          name: id
+          description: "ID of `Answer`"
+          required: true
+          type: string
+      responses:
+        200:
+          description: Return a `Answer`
+          schema:
+            $ref: '#/definitions/answer'
+        404:
+          description: Specified `Answer` is not found.
+          schema:
+            $ref: '#/definitions/resourceNotFoundError'
+    put:
+      tags:
+        - answer
+      summary: Update a `Answer`
+      description: Update a `Answer`
+      security:
+        - UserCredential: []
+      operationId: updateAnswer
+      parameters:
+        - in: header
+          name: authorization
+          description: User credential
+          required: true
+          type: string
+        - in: path
+          name: id
+          description: "ID of `Answer`"
+          required: true
+          type: string
+        - in: body
+          name: createAnswerBody
+          required: true
+          schema:
+            type: object
+            properties:
+              body:
+                description: Body of a `Answer`
+                type: string
+                minLength: 1
+                maxLength: 3000
+            example:
+              body: "body"
+      responses:
+        200:
+          description: Update a `Answer`
+          schema:
+            $ref: '#/definitions/answer'
+        401:
+          description: Credential is invalid or missing. Or poster of this `Answer` is different of login user.
+          schema:
+            $ref: '#/definitions/invalidCredentialError'
+        404:
+          description: Specified `Answer` is not found.
+          schema:
+            $ref: '#/definitions/resourceNotFoundError'
+  /question/{question_id}/comment:
+    post:
+      tags:
+        - comment
+      summary: Create a `Comment` on a `Question`
+      description: Create a `Comment` on a `Question`
+      security:
+        - UserCredential: []
+      operationId: createCommentOnQuestion
+      parameters:
+        - in: header
+          name: authorization
+          description: User credential
+          required: true
+          type: string
+        - in: path
+          name: question_id
+          description: "ID of `Question`"
+          required: true
+          type: string
+        - in: body
+          name: createCommentOnQuestionBody
+          required: true
+          schema:
+            type: object
+            required:
+              ["body"]
+            properties:
+              body:
+                description: Body of a `Comment`
+                type: string
+                minLength: 1
+                maxLength: 1000
+            example:
+              body: "body"
+      responses:
+        200:
+          description: create a `Comment`
+          schema:
+            $ref: '#/definitions/comment'
+        400:
+          description: The request body is invalid.
+          schema:
+            $ref: '#/definitions/badRequestError'
+        401:
+          description: Credential is invalid or missing.
+          schema:
+            $ref: '#/definitions/badRequestError'
+        404:
+          description: Specified `Question` is not found.
+          schema:
+            $ref: '#/definitions/resourceNotFoundError'
+  /question/{question_id}/comment/{id}:
+    put:
+      tags:
+        - comment
+      summary: Update a `Comment` on a `Question`
+      description: Update a `Comment` on a `Question`
+      security:
+        - UserCredential: []
+      operationId: updateCommentOnQuestion
+      parameters:
+        - in: header
+          name: authorization
+          description: User credential
+          required: true
+          type: string
+        - in: path
+          name: question_id
+          description: "ID of `Question`"
+          required: true
+          type: string
+        - in: path
+          name: id
+          description: "ID of `Comment`"
+          required: true
+          type: string
+        - in: body
+          name: updateCommentOnQuestionBody
+          required: true
+          schema:
+            type: object
+            properties:
+              body:
+                description: Body of a `Comment`
+                type: string
+                minLength: 1
+                maxLength: 1000
+            example:
+              body: "body"
+      responses:
+        200:
+          description: Update a `Comment` on a `Question`
+          schema:
+            $ref: '#/definitions/comment'
+        400:
+          description: The request body is invalid.
+          schema:
+            $ref: '#/definitions/badRequestError'
+        401:
+          description: Credential is invalid or missing. Or poster of this Comment is different of login user.
+          schema:
+            $ref: '#/definitions/invalidCredentialError'
+        404:
+          description: Specified `Question` or `Comment` is not found.
+          schema:
+            $ref: '#/definitions/resourceNotFoundError'
+  /answer/{answer_id}/comment:
+    post:
+      tags:
+        - comment
+      summary: Create a `Comment` on a `Answer`
+      description: Create a `Comment` on a `Answer`
+      security:
+        - UserCredential: []
+      operationId: createCommentOnAnswer
+      parameters:
+        - in: header
+          name: authorization
+          description: User credential
+          required: true
+          type: string
+        - in: path
+          name: answer_id
+          description: "ID of `Answer`"
+          required: true
+          type: string
+        - in: body
+          name: createCommentOnAnswerBody
+          required: true
+          schema:
+            type: object
+            required:
+              ["body"]
+            properties:
+              body:
+                description: Body of a `Comment`
+                type: string
+                minLength: 1
+                maxLength: 1000
+            example:
+              body: "body"
+      responses:
+        200:
+          description: create a `Comment`
+          schema:
+            $ref: '#/definitions/comment'
+        400:
+          description: The request body is invalid.
+          schema:
+            $ref: '#/definitions/badRequestError'
+        401:
+          description: Credential is invalid or missing.
+          schema:
+            $ref: '#/definitions/badRequestError'
+        404:
+          description: Specified `Answer` is not found.
+          schema:
+            $ref: '#/definitions/resourceNotFoundError'
+  /answer/{answer_id}/comment/{id}:
+    put:
+      tags:
+        - comment
+      summary: Update a `Comment` on a `Answer`
+      description: Update a `Comment` on a `Answer`
+      security:
+        - UserCredential: []
+      operationId: updateCommentOnAnswer
+      parameters:
+        - in: header
+          name: authorization
+          description: User credential
+          required: true
+          type: string
+        - in: path
+          name: answer_id
+          description: "ID of `Answer`"
+          required: true
+          type: string
+        - in: path
+          name: id
+          description: "ID of `Comment`"
+          required: true
+          type: string
+        - in: body
+          name: updateCommentOnAnswerBody
+          required: true
+          schema:
+            type: object
+            properties:
+              body:
+                description: Body of a `Comment`
+                type: string
+                minLength: 1
+                maxLength: 1000
+            example:
+              body: "body"
+      responses:
+        200:
+          description: Update a `Comment` on a `Answer`
+          schema:
+            $ref: '#/definitions/comment'
+        400:
+          description: The request body is invalid.
+          schema:
+            $ref: '#/definitions/badRequestError'
+        401:
+          description: Credential is invalid or missing. Or poster of this Comment is different of login user.
+          schema:
+            $ref: '#/definitions/invalidCredentialError'
+        404:
+          description: Specified `Answer` or `Comment` is not found.
+          schema:
+            $ref: '#/definitions/resourceNotFoundError'
+  /question/{question_id}/vote/{vote_type}:
+    post:
+      tags:
+        - vote
+      summary: Create a like or dislike vote on a `Question`
+      description: Create a like or dislike vote on a `Question`
+      security:
+        - UserCredential: []
+      operationId: createVoteOnQuestion
+      parameters:
+        - in: header
+          name: authorization
+          description: User credential
+          required: true
+          type: string
+        - in: path
+          name: question_id
+          description: "ID of `Question`"
+          required: true
+          type: string
+        - in: path
+          name: vote_type
+          description: "type of Vote. value is `like_vote` or  `dislike_vote`"
+          required: true
+          type: string
+      responses:
+        200:
+          description: create a `Vote`
+          schema:
+            $ref: '#/definitions/vote'
+        400:
+          description: The request body is invalid. Example, In case login user tried to vote again though he/she already voted.
+          schema:
+            $ref: '#/definitions/badRequestError'
+        401:
+          description: Credential is invalid or missing.
+          schema:
+            $ref: '#/definitions/badRequestError'
+        404:
+          description: Specified `Question` is not found.
+          schema:
+            $ref: '#/definitions/resourceNotFoundError'
+  /user/login:
+    post:
+      tags:
+        - user
+      summary: API to log-in
+      description: API to log-in
+      security:
+        - UserCredential: []
+      operationId: userLogin
+      parameters:
+        - in: body
+          name: userLoginBody
+          required: true
+          schema:
+            type: object
+            required: ["email", "password"]
+            properties:
+              email:
+                description: "Email of the user. Either 'email' or 'name' is required and you cannot specify both. This parameter is treated in a case-insensitive way: all upper-case letters in 'email' value are converted to lower-case."
+                type: string
+              password:
+                description: "Password of the user. Expired password is not allowed. If you want to login as a user without his/her password, you can specify your app's root/adminStaff credential here."
+                type: string
+            example:
+              email: "my@email.addr"
+              password: "my_password"
+      responses:
+        200:
+          description: user information
+          schema:
+            $ref: '#/definitions/user'
+        400:
+          description: The request body is invalid.
+          schema:
+            $ref: '#/definitions/badRequestError'
+  /user/logout:
+    post:
+      tags:
+        - user
+      summary: API to logout
+      description: API to logout
+      security:
+        - UserCredential: []
+      operationId: userLogout
+      parameters:
+        - in: header
+          name: authorization
+          description: User credential
+          required: true
+          type: string
+      responses:
+        204:
+          description: User credential is expired. (response body is empty.)
+        401:
+          description: user credential is already expired
+          schema:
+            $ref: '#/definitions/sessionExpiredError'
+        404:
+          description: User is not found.
+          schema:
+            $ref: '#/definitions/resourceNotFoundError'
+  /user/me:
+    get:
+      tags:
+        - user
+      summary: Retrieve own user document
+      description: Returns own user document who is now on logging in.
+      security:
+        - UserCredential: []
+      operationId: retrieveSelfUser
+      parameters:
+        - in: header
+          name: authorization
+          description: User credential
+          required: true
+          type: string
+      responses:
+        200:
+          description: user document
+          schema:
+            $ref: '#/definitions/user'
+        401:
+          description: user credential is expired
+          schema:
+            $ref: '#/definitions/sessionExpiredError'
+        404:
+          description: User is not found.
+          schema:
+            $ref: '#/definitions/resourceNotFoundError'
+definitions:
+  question:
+    type: object
+    required: ["id", "title", "body", "user_id", "created_at", "comments", "like_voter_ids", "dislike_voter_ids"]
+    properties:
+      id:
+        description: "ID of a `Question`"
+        type: string
+      title:
+        description: "Title of a `Question`"
+        type: string
+        minLength: 1
+        maxLength: 100
+      body:
+        description: "Body of a `Question`"
+        type: string
+        minLength: 1
+        maxLength: 3000
+      user_id:
+        description: "ID of User who posted this `Question`"
+        type: string
+      craeted_at:
+        description: "ISO8601 timestamp of the time when this `Question` is posted"
+        type: string
+      comments:
+        description: "Comments of this `Question`"
+        type: array
+        items:
+          $ref: '#/definitions/comment'
+      like_voter_ids:
+        description: "List of ID of user who liked it"
+        type: array
+        items:
+          type: string
+      dislike_voter_ids:
+        description: "List of ID of user who disliked it"
+        type: array
+        items:
+          type: string
+    example:
+      id: "5a94fc0c38000038007df50d"
+      title: "title"
+      body: "body"
+      user_id: "589d196d22000036137e473b"
+      created_at: "2018-02-27T06:34:52+00:00"
+      comments: [
+        {
+          id: "dhzMyIF8dXYbCpZTHred",
+          user_id: "589d196d22000036137e473b",
+          created_at: "2018-02-27T06:35:26+00:00",
+          body: "body1"
+        },
+        {
+          id: "dhzMyIF8dXYbCpZTHree",
+          user_id: "589d196d22000036137e473b",
+          created_at: "2018-02-27T06:36:26+00:00",
+          body: "body2"
+        }
+      ]
+      like_voter_ids: [
+        "589d196d22000036137e473b"
+      ]
+      dislike_voter_ids: []
+  answer:
+    type: object
+    required: ["id", "body", "question_id", "user_id", "created_at", "comments"]
+    properties:
+      id:
+        description: "ID of a `Question`"
+        type: string
+      body:
+        description: "Body of a `Question`"
+        type: string
+        minLength: 1
+        maxLength: 3000
+      user_id:
+        description: "ID of User who posted this `Question`"
+        type: string
+      question_id:
+        description: "ID of the question that answered"
+        type: string
+      craeted_at:
+        description: "ISO8601 timestamp of the time when this `Question` is posted"
+        type: string
+      comments:
+        description: "Comments of this `Question`"
+        type: array
+        items:
+          $ref: '#/definitions/comment'
+    example:
+      id: "6a94fc0c38000038007df50d"
+      body: "body"
+      question_id: "5a94fc0c38000038007df50d"
+      user_id: "589d196d22000036137e473b"
+      created_at: "2018-02-27T06:34:52+00:00"
+      comments: [
+        {
+          id: "dhzMyIF8dXYbCpZTHraa",
+          user_id: "589d196d22000036137e473b",
+          created_at: "2018-02-27T06:35:26+00:00",
+          body: "body1"
+        },
+        {
+          id: "dhzMyIF8dXYbCpZTHrab",
+          user_id: "589d196d22000036137e473b",
+          created_at: "2018-02-27T06:36:26+00:00",
+          body: "body2"
+        }
+      ]
+  comment:
+    type: object
+    required: ["id", "body", "user_id", "created_at"]
+    properties:
+      id:
+        description: "ID of a `Comment`"
+        type: string
+      body:
+        description: "Body of a `Comment`"
+        type: string
+        minLength: 1
+        maxLength: 3000
+      user_id:
+        description: "ID of User who posted this `Comment`"
+        type: string
+      craeted_at:
+        description: "ISO8601 timestamp of the time when this `Comment` is posted"
+        type: string
+    example:
+      id: "7a94fc0c38000038007df50d"
+      user_id: "589d196d22000036137e473b"
+      body: "body"
+      created_at: "2018-02-27T06:34:52+00:00"
+  vote:
+    type: object
+    required: ["like_voter_ids", "dislike_voter_ids"]
+    properties:
+      like_voter_ids:
+        description: "List of ID of user who liked it"
+        type: array
+        items:
+          type: string
+      dislike_voter_ids:
+        description: "List of ID of user who disliked it"
+        type: array
+        items:
+          type: string
+    example:
+      like_voter_ids: [
+        "589d196d22000036137e473b"
+      ]
+      dislike_voter_ids: []
+  user:
+    type: object
+    required:
+      ["id", "email", "created_at", "session"]
+    properties:
+      id:
+        description: Unique ID (given by client or generated by Dodai system).
+        type: string
+      email:
+        description: Email address of the user.
+        type: string
+      created_at:
+        description: ISO8601 timestamp of the creation time of this document. This field may not be present for older users.
+        type: string
+      session:
+        description: Session infromation of user
+        type: object
+        required: ["key", "expires_at", "password_set_at"]
+        properties:
+          key:
+            description: "User credential to be used in subsequent requests, or null. This key is also called `user credential`"
+            type: string
+          expires_at:
+            description: "ISO8601 timestamp at which the user credential becomes invalid, or null."
+            type: string
+          password_aet_at:
+            description: "ISO8601 timestamp at which the password of the user was set."
+            type: string
+          password_expires_at:
+            description: "ISO8601 timestamp at which the password of the user expires, or null."
+            type: string
+    example:
+      id: "51ff0475d615329700235136"
+      email: "my@email.addr"
+      created_at: "2013-10-22T13:27:46+00:00"
+      session: {
+        key: "NoBtELh82txWnMb5kEQJ",
+        expires_at: "2013-10-22T10:04:20+00:00",
+        password_set_at: "2013-09-01T15:42:47+00:00",
+        password_expires_at: "2013-12-01T15:42:47+00:00"
+      }
+  badRequestError:
+    type: object
+    properties:
+      code:
+        type: string
+      error:
+        type: string
+      description:
+        type: string
+    example:
+      code: "400-06"
+      error: "BadRequest"
+      description: "Unable to understand the request."
+  invalidCredentialError:
+    type: object
+    properties:
+      code:
+        type: string
+      error:
+        type: string
+      description:
+        type: string
+    example:
+      code: "401-00"
+      error: "InvalidCredential"
+      description: "The given credential is invalid."
+  sessionExpiredError:
+    type: object
+    properties:
+      code:
+        type: string
+      error:
+        type: string
+      description:
+        type: string
+    example:
+      code: "401-02"
+      error: "SessionExpired"
+      description: "The session of given credential has expired."
+  resourceNotFoundError:
+    type: object
+    properties:
+      code:
+        type: string
+      error:
+        type: string
+      description:
+        type: string
+    example:
+      code: "404-04"
+      error: "ResourceNotFound"
+      description: "The resource does not exist in the database."

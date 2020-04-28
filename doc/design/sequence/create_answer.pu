@@ -1,0 +1,42 @@
+@startuml
+
+participant Browser
+participant Gear
+participant Dodai
+
+Browser -> Gear: POST /v1/answer (user_credential, question_id, body)
+note right
+  回答をするQuestionのidをrequest bodyで指定する
+end note
+Gear -> Dodai: GET /v1/:appId/:groupId/user/me  (user_credential)
+alt user credentialが間違っている
+  Gear <-- Dodai: error
+  Browser <-- Gear: "error"
+else user credentialが正しく、userの取得に成功
+  Gear <-- Dodai: user
+  Gear -> Dodai: "<font color=blue>GET /v1/:appId/:groupId/Question/:id"
+  note right
+  指定されたidのQuestionを取得
+  end note
+  alt "<font color=red>指定されたidのQuestionが存在しない"
+    Gear <-- Dodai: not found error
+    note right
+    指定されたidのQuestionが存在しない
+    end note
+    Browser <-- Gear: "<font color=red>not found error"
+  else
+    Gear -> Gear: request bodyをvalidation(bodyが3000文字以下であるかどうかなど)
+    alt request bodyの値が不正
+      Browser <-- Gear: error
+    else
+      Gear -> Dodai: POST /v1/:appId/:groupId/data/Awser
+      note right
+      指定されたquestion_idやbodyに基づきanswer documentを作成
+      end note
+      Gear <-- Dodai
+      Browser <-- Gear
+    end
+  end
+end
+
+@endumlv

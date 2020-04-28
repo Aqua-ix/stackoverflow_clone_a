@@ -1,0 +1,46 @@
+@import '~@/assets/css/colorCommon';
+
+.pageTitle {
+  margin-bottom: 2rem;
+  overflow: hidden;
+  font-size: 2.5rem;
+}
+
+.hr {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: 0;
+  border-top: 0.1rem solid rgba(0, 0, 0, 0.1);
+}
+
+.additional {
+  color: $font_additional_color;
+  font-size: small;
+}
+
+.navbarBrand {
+  font-size: 1rem;
+}
+
+.formControl {
+  display: block;
+  width: 100%;
+  height: calc(1.5em + 0.75rem + 0.2rem);
+  margin-bottom: 1rem;
+  padding: 0.375rem 0.75rem;
+  color: $font_base_color;
+  font-weight: 400;
+  font-size: 2rem;
+  line-height: 1.5;
+  background-color: $form_background-color;
+  background-clip: padding-box;
+  border: 0.1rem solid $form_border_color;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.errorEmpty {
+  display: inline-block;
+  color: $font_error_color;
+  font-size: 1.5rem;
+}

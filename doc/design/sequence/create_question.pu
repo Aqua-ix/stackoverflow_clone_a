@@ -1,0 +1,27 @@
+@startuml
+
+participant Browser
+participant Gear
+participant Dodai
+
+Browser -> Gear: POST /v1/question (user_credential, title, body)
+Gear -> Dodai: "<font color=blue>(1) GET /v1/:appId/:groupId/user/me  (user_credential)"
+alt (1-1) user credentialが間違っている
+  Gear <-- Dodai: error
+  Browser <-- Gear: "<font color=red> error"
+else (1-2) user credentialが正しく、userの取得に成功
+  Gear <-- Dodai: user
+  Gear -> Gear: "<font color=blue>(2) title, bodyの中身をチェック"
+  alt (2-1) request bodyの値が不正
+    Browser <-- Gear: "<font color=red> error"
+    note right
+      titleが101文字以上あるなどの場合
+    end note
+  else
+    Gear -> Dodai: "<font color=blue>(3) POST /v1/:appId/:groupId/data/Question (root_key, title, body)""
+    Gear <-- Dodai
+    Browser <-- Gear: "<font color=blue>(4) success response"
+  end
+end
+
+@enduml

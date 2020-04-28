@@ -1,0 +1,23 @@
+@import '~@/assets/css/commonStyle';
+@import '~@/assets/css/buttonCommonStyle';
+
+.title {
+  overflow: hidden;
+  font-size: 1.8rem;
+  text-overflow: ellipsis;
+}
+
+.body {
+  box-sizing: border-box;
+  margin-bottom: 2rem;
+  font-weight: bold;
+  font-size: 1.8rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  text-align: left;
+  word-break: break-all;
+}
+
+.edit {
+  height: calc(1.5em + 0.75rem + 0.2rem);
+}

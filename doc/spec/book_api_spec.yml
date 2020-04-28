@@ -1,0 +1,204 @@
+swagger: '2.0'
+info:
+  version: 0.0.1
+  title: Book API of StackoverflowCloneA gear
+host: stackoverflow-clone.solomondev.access-company.com
+basePath: /v1
+schemes:
+  - https
+security:
+  - UserCredential: []
+securityDefinitions:
+  UserCredential:
+    type: apiKey
+    in: header
+    name: Authorization
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /book:
+    get:
+      tags:
+        - book
+      summary: Retrieve a list of `Book`
+      description: Returns a list of `Book`
+      security:
+        - UserCredential: []
+      operationId: retrieveBookList
+      parameters:
+        - in: query
+          name: title
+          description: "If `title` is specified, the book that can be retrieved is restricted to those with `title` specified values"
+          required: false
+          type: string
+        - in: query
+          name: author
+          description: "If `author` is specified, the book that can be retrieved is restricted to those with `author` specified values"
+          required: false
+          type: string
+      responses:
+        200:
+          description: Return a list of `Book`
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/book'
+        400:
+          description: The request parameter is invalid.
+          schema:
+            $ref: '#/definitions/badRequestError'
+    post:
+      tags:
+        - book
+      summary: Create a `Book`
+      description: Create a `Book`
+      security:
+        - UserCredential: []
+      operationId: createBook
+      parameters:
+        - in: body
+          name: createBookBody
+          required: true
+          schema:
+            type: object
+            required:
+              ["title", "author"]
+            properties:
+              title:
+                description: Title of a `Book`
+                type: string
+                minLength: 1
+                maxLength: 100
+              author:
+                description: Author of a `Book`
+                type: string
+                minLength: 1
+                maxLength: 50
+            example:
+              title: "title"
+              author: "author"
+      responses:
+        201:
+          description: create a `Book`
+          schema:
+            $ref: '#/definitions/book'
+        400:
+          description: The request body is invalid.
+          schema:
+            $ref: '#/definitions/badRequestError'
+  /book/{id}:
+    get:
+      tags:
+        - book
+      summary: Retrieve a `Book`
+      description: Returns a `Book`
+      security:
+        - UserCredential: []
+      operationId: retrieveBook
+      parameters:
+        - in: path
+          name: id
+          description: "ID of `Book`"
+          required: true
+          type: string
+      responses:
+        200:
+          description: Return a `Book`
+          schema:
+            $ref: '#/definitions/book'
+        404:
+          description: Specified `Book` is not found.
+          schema:
+            $ref: '#/definitions/resourceNotFoundError'
+    put:
+      tags:
+        - book
+      summary: Update a `Book`
+      description: Update a `Book`
+      security:
+        - UserCredential: []
+      operationId: updateBook
+      parameters:
+        - in: path
+          name: id
+          description: "ID of `Book`"
+          required: true
+          type: string
+        - in: body
+          name: updateBookBody
+          required: true
+          schema:
+            type: object
+            properties:
+              title:
+                description: Title of a `Book`
+                type: string
+                minLength: 1
+                maxLength: 100
+              author:
+                description: Author of a `Book`
+                type: string
+                minLength: 1
+                maxLength: 50
+            example:
+              title: "title"
+              author: "author"
+      responses:
+        200:
+          description: Update a `Book`
+          schema:
+            $ref: '#/definitions/book'
+        404:
+          description: Specified `Book` is not found.
+          schema:
+            $ref: '#/definitions/resourceNotFoundError'
+definitions:
+  book:
+    type: object
+    required: ["id", "title", "author"]
+    properties:
+      id:
+        description: "ID of a `Book`"
+        type: string
+      title:
+        description: "Title of a `Book`"
+        type: string
+        minLength: 1
+        maxLength: 100
+      Author:
+        description: "Author of a `Book`"
+        type: string
+        minLength: 1
+        maxLength: 50
+    example:
+      id: "5a94fc0c38000038007df50d"
+      title: "title"
+      author: "author"
+  badRequestError:
+    type: object
+    properties:
+      code:
+        type: string
+      error:
+        type: string
+      description:
+        type: string
+    example:
+      code: "400-06"
+      error: "BadRequest"
+      description: "Unable to understand the request."
+  resourceNotFoundError:
+    type: object
+    properties:
+      code:
+        type: string
+      error:
+        type: string
+      description:
+        type: string
+    example:
+      code: "404-04"
+      error: "ResourceNotFound"
+      description: "The resource does not exist in the database."

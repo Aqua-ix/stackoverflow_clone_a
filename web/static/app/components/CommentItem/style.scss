@@ -1,0 +1,18 @@
+@import '~@/assets/css/commonStyle';
+@import '~@/assets/css/buttonCommonStyle';
+
+.main {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.body {
+  overflow: hidden;
+  font-weight: bold;
+  text-overflow: ellipsis;
+}
+
+.edit {
+  height: calc(1.5em + 0.75rem + 0.2rem);
+}

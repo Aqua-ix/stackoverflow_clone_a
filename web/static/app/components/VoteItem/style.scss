@@ -1,0 +1,19 @@
+@import '~@/assets/css/commonStyle';
+@import '~@/assets/css/buttonCommonStyle';
+
+.isActive {
+  color: $vote_active_color !important;
+  cursor: pointer !important;
+}
+
+.voteArrow {
+  margin-left: -0.5rem;
+  color: $vote_passive_color;
+  font-size: 1.8em;
+  cursor: not-allowed;
+}
+
+.voteCount {
+  color: $vote_active_color;
+  font-size: 1.8em;
+}
