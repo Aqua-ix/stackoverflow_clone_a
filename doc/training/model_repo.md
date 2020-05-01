@@ -149,12 +149,12 @@ end
 上記のmoduleには関数を1つも実装していませんが、実際にはいくつかの関数が自動で生成されています。
 iex consoleで
 ```
-iex(1)> StackoverflowCloneA.Repo.Question
+iex(1)> StackoverflowCloneA.Repo.Book
 ```
 と入力し続けてタブをうつと関数の一覧が見えますので確認してみます。
 また、関数に対して`h`をつけて関数を入力すると、関数の詳細が表示されます。例えば`insert`関数の場合は下記です。
 ```
-iex(1)> h StackoverflowCloneA.Repo.Question.insert
+iex(1)> h StackoverflowCloneA.Repo.Book.insert
 ```
 
 ※Model, Repo moduleはデータ種類ごとに作成する必要があります。例えば、Questionデータを触る場合は、Question用のModelとRepo moduleを別途作ってあげる必要があります。
