@@ -60,7 +60,7 @@ defun create(%Conn{request: %Request{body: body}} = conn) :: Conn.t do
       # DodaiのBook Collectionのdocumentを作成する処理。
       # 処理の実態はRB(BookのRepository module)の関数を「呼び出している」
       # つまり、documentを作成するという処理の実態はRepository moduleに実装されています。
-      {:ok, book} = RB.insert(%{data: data}, StackoverflowCloneA.Dodai.root_key())
+      {:ok, book} = RB.insert(%{data: data}, StackoverflowClone.Dodai.root_key())
 
       # 成功レスポンスを返す
       Conn.json(conn, 201, Helper.to_response_body(book))
@@ -88,9 +88,9 @@ model moduleはデータの特性を定義するためのmoduleです。Bookのm
 ```
 use Croma
 
-defmodule StackoverflowCloneA.Model.Book do
+defmodule StackoverflowClone.Model.Book do
   @moduledoc """
-  Book of StackoverflowCloneA app.
+  Book of StackoverflowClone app.
   """
 
   defmodule Title do
@@ -139,9 +139,9 @@ Bookの例は[`lib/repo/book.ex`](../lib/repo/book.ex)で下記のように実�
 ```
 use Croma
 
-defmodule StackoverflowCloneA.Repo.Book do # collection名はmodule名と一致させる必要があります。
+defmodule StackoverflowClone.Repo.Book do # collection名はmodule名と一致させる必要があります。
   use AntikytheraAcs.Dodai.Repo.Datastore, [
-    datastore_models: [StackoverflowCloneA.Model.Book], # modelとして先ほど作ったmodule名を指定しています。
+    datastore_models: [StackoverflowClone.Model.Book], # modelとして先ほど作ったmodule名を指定しています。
   ]
 end
 ```
@@ -149,12 +149,12 @@ end
 上記のmoduleには関数を1つも実装していませんが、実際にはいくつかの関数が自動で生成されています。
 iex consoleで
 ```
-iex(1)> StackoverflowCloneA.Repo.Question
+iex(1)> StackoverflowClone.Repo.Book
 ```
 と入力し続けてタブをうつと関数の一覧が見えますので確認してみます。
 また、関数に対して`h`をつけて関数を入力すると、関数の詳細が表示されます。例えば`insert`関数の場合は下記です。
 ```
-iex(1)> h StackoverflowCloneA.Repo.Question.insert
+iex(1)> h StackoverflowClone.Repo.Book.insert
 ```
 
 ※Model, Repo moduleはデータ種類ごとに作成する必要があります。例えば、Questionデータを触る場合は、Question用のModelとRepo moduleを別途作ってあげる必要があります。
@@ -167,7 +167,7 @@ iex(1)> h StackoverflowCloneA.Repo.Question.insert
 
 Dodaiからdocumentを取得する関数は`retrieve/2`関数です。この関数の詳細はiex consoleで下記のようにして確認できます。
 ```
-iex(1)> h StackoverflowCloneA.Repo.Book.retrieve
+iex(1)> h StackoverflowClone.Repo.Book.retrieve
 ```
 出力結果にありますように、下記の3つの引数をとります。
 * id: 取得するdocumentのid
@@ -176,7 +176,7 @@ iex(1)> h StackoverflowCloneA.Repo.Book.retrieve
 
 試しに下記のようにiex consoleで入力してみましょう。(root_keyの値は[Dodai Console](https://dodai-console.solomondev.access-company.com/login)で確認ください。)
 ```
-iex(1)> StackoverflowCloneA.Repo.Book.retrieve("取得したいdocumentのid", "root_key")
+iex(1)> StackoverflowClone.Repo.Book.retrieve("取得したいdocumentのid", "root_key")
 ```
 
 無事取得でき、結果がModel moduleで定義したmoduleのstructとして定義されていることを確認しましょう。
@@ -185,7 +185,7 @@ iex(1)> StackoverflowCloneA.Repo.Book.retrieve("取得したいdocumentのid", "
 
 Dodaiからdocumentを取得する関数は`retrieve/2`関数です。この関数の詳細はiex consoleで下記のようにして確認できます。
 ```
-iex(1)> h StackoverflowCloneA.Repo.Book.insert
+iex(1)> h StackoverflowClone.Repo.Book.insert
 ```
 出力結果にありますように、下記の3つの引数をとります。
 * insert_action: どういったinsert処理をするかを指定するための値
@@ -230,12 +230,12 @@ curlでDodaiにdocumentを作成するときにこれらの値を指定して作
 
 試しに下記のようにしてdocumentを作成してみましょう。
 ```
-iex(1)> StackoverflowCloneA.Repo.Book.insert(%{data: %{title: "好きな文字列を指定ください", author: "好きな文字列を指定ください"}}, "root_key")
+iex(1)> StackoverflowClone.Repo.Book.insert(%{data: %{title: "好きな文字列を指定ください", author: "好きな文字列を指定ください"}}, "root_key")
 ```
 うまく成功したら、[Dodai Console](https://dodai-console.solomondev.access-company.com/login)で実際に作成できているかみてみましょう。
 次に下記をためしてみましょう。
 ```
-iex(1)> StackoverflowCloneA.Repo.Book.insert(%{data: %{title: "好きな文字列を指定ください"}}, "root_key")
+iex(1)> StackoverflowClone.Repo.Book.insert(%{data: %{title: "好きな文字列を指定ください"}}, "root_key")
 ```
 エラーになったと思います。
 これはmodel moduleで定義したBookの特性(authorというfieldが必須)を満たしていないためです。
