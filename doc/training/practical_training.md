@@ -85,7 +85,7 @@ master branchへのcommitまでの流れは下記です。
 ## その他
 
 * 実習中不明点などがあれば積極的に講師にご質問ください。
-* **この実習での全ての資料の説明(コードの中身も含みます)としてStackoverflowCloneAと書かれている部分はStackoverflowCloneATeamAのような各自のteam名に応じたものに置き換えてください**
+* **この実習での全ての資料の説明(コードの中身も含みます)としてStackoverflowCloneと書かれている部分はStackoverflowCloneAのような各自のpair名に応じたものに置き換えてください**
 * サンプルとして`Book`リソースにたいするCRU(D) APIの実装がありますので、必要に応じて参照ください。
   * [仕様](../spec/book_api_spec.yml)
   * [Gear側の実装](../../web/controller/book/)

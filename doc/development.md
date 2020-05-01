@@ -6,6 +6,7 @@
 
 - セットアップ
   - `cd /path/to/your_gear`
+    - `/path/to/your_gear`をそのまま入力するのではなく、各自がcloneしたフォルダへのpathを指定してください。
   - [asdf](https://github.com/asdf-vm/asdf)のinstall
     - [here](https://hexdocs.pm/antikythera/getting_started.html)を参照
   - `$ mix deps.get`
@@ -22,7 +23,7 @@
     ```
       - example
       ```
-      127.0.0.1 stackoverflow-team-a.localhost
+      127.0.0.1 stackoverflow-clone-a.localhost
       ```
 
 - Webfrontend向けのセットアップ
@@ -44,6 +45,7 @@
     - `http://{your gear name}.localhost:8080/`
   - curlで`retrieveQuestionList API`が叩けることを確認する。(gear名の`_`の部分は`-`に置き換えてください。)
     - `curl -XGET http://{your gear name}.localhost:8080/v1/question | jq`
+
 
 # Webfrontendのwebpack-dev-serverの実行
 
