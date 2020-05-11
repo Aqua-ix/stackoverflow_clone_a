@@ -1,7 +1,53 @@
+use Croma
+
 defmodule StackoverflowCloneA.Controller.Question.Create do
   use StackoverflowCloneA.Controller.Application
+  alias StackoverflowCloneA.Controller.Question.Helper
+  alias StackoverflowCloneA.Model.{User, Question}
+  alias StackoverflowCloneA.Repo.Question, as: RQ
+  alias StackoverflowCloneA.Error.BadRequest
+  alias StackoverflowCloneA.Model.Question
 
-  def create(_conn) do
-    # Implement me
+  plug StackoverflowCloneA.Plug.FetchMe, :fetch, []
+
+  defmodule RequestBody do
+    use Croma.Struct, recursive_new?: true, fields: [
+      # xxxの部分をStackoverflowCloneA.Model.Questionで
+      # 定義したtitleのmoduleに置き換えましょう
+      title: Question.Title, 
+      body:  Question.Body
+    ]
+  end
+
+  defun create(%Conn{assigns: %{me: %User{_id: user_id}}} = conn :: v[Conn.t]) :: Conn.t do
+    # RequestBody.new(body)がbodyが上で定義したRequestBodyの型をみたいしているかをチェック
+    # request bodyをconnから抜き出して変数bodyに代入しましょう。
+    body = conn.request.body
+    case RequestBody.new(body) do
+      # body値がRequestBodyの条件を満たしていない場合
+      {:error, _}      ->
+        # 下記の関数でエラーレスポンスを返す。
+        # ErrorJson.json_by_error関数は第二引数で指定したエラーを返す
+        ErrorJson.json_by_error(conn, BadRequest.new())
+
+      # body値がRequestBodyの条件を満たしている場合
+      {:ok, validated} ->
+        # 作成するquestionのdataを組み立てましょう
+        data = %{
+          "comments"        => [],
+          "like_voter_ids"    => [],
+          "dislike_voter_ids" => [],
+          # titleとbodyはrequest bodyから取り出す
+          "title"           => validated.title,
+          "body"            => validated.body,
+          # userの情報はconn.assigns.meに入っている
+          "user_id"          => user_id,
+        } |> Question.Data.new!()
+
+        # 指定したdataでinsert関数を実行      
+        {:ok, question} = RQ.insert(%{data: data}, StackoverflowCloneA.Dodai.root_key())
+        # to_response_bodyはquestionをgearが返すレスポンスに変換する関数です。
+        Conn.json(conn, 200, Helper.to_response_body(question))
+    end
   end
 end
