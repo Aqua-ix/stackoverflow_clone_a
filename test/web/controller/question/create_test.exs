@@ -6,6 +6,7 @@ defmodule StackoverflowCloneA.Controller.Question.CreateTest do
 
   @question   QuestionData.model()
   @api_prefix "/v1/question/"
+  @header     %{"authorization" => "hYniRi3lFlsFVMmERimC"}
 
   test "create/1 " <>
     "should create question" do
@@ -26,7 +27,7 @@ defmodule StackoverflowCloneA.Controller.Question.CreateTest do
         {:ok, @question}
       end)
 
-      res = Req.post_json(@api_prefix, %{"title" => "title", "body" => "body"}, %{"authorization" => "hYniRi3lFlsFVMmERimC"})
+      res = Req.post_json(@api_prefix, %{"title" => "title", "body" => "body"}, @header)
       assert res.status               == 200
       assert Poison.decode!(res.body) == QuestionData.gear()
   end
@@ -40,7 +41,7 @@ defmodule StackoverflowCloneA.Controller.Question.CreateTest do
       %{"title" => "body",                     "body" => String.duplicate("a", 3001)},
     ]
     Enum.each(invalid_bodies, fn body ->
-      res = Req.post_json(@api_prefix, body, %{"authorization" => "hYniRi3lFlsFVMmERimC"})
+      res = Req.post_json(@api_prefix, body, @header)
       IO.inspect(res)
       assert res.status              == 400
       assert Jason.decode!(res.body) == %{

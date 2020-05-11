@@ -12,8 +12,6 @@ defmodule StackoverflowCloneA.Controller.Question.Create do
 
   defmodule RequestBody do
     use Croma.Struct, recursive_new?: true, fields: [
-      # xxxの部分をStackoverflowCloneA.Model.Questionで
-      # 定義したtitleのmoduleに置き換えましょう
       title: Question.Title, 
       body:  Question.Body
     ]
@@ -21,7 +19,6 @@ defmodule StackoverflowCloneA.Controller.Question.Create do
 
   defun create(%Conn{assigns: %{me: %User{_id: user_id}}} = conn :: v[Conn.t]) :: Conn.t do
     # RequestBody.new(body)がbodyが上で定義したRequestBodyの型をみたいしているかをチェック
-    # request bodyをconnから抜き出して変数bodyに代入しましょう。
     body = conn.request.body
     case RequestBody.new(body) do
       # body値がRequestBodyの条件を満たしていない場合
@@ -32,15 +29,12 @@ defmodule StackoverflowCloneA.Controller.Question.Create do
 
       # body値がRequestBodyの条件を満たしている場合
       {:ok, validated} ->
-        # 作成するquestionのdataを組み立てましょう
         data = %{
           "comments"        => [],
           "like_voter_ids"    => [],
           "dislike_voter_ids" => [],
-          # titleとbodyはrequest bodyから取り出す
           "title"           => validated.title,
           "body"            => validated.body,
-          # userの情報はconn.assigns.meに入っている
           "user_id"          => user_id,
         } |> Question.Data.new!()
 
