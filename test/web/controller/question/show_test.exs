@@ -30,7 +30,7 @@ defmodule StackoverflowCloneA.Controller.Question.ShowTest do
     "it returns ResourceNotFound" do
     :meck.expect(RQ, :retrieve, fn(_id, _key) ->
       # エラー時のresponseをここで返してあげましょう
-      {:error,%Dodai.ResourceNotFound{}}
+      {:error, %Dodai.ResourceNotFound{}}
     end)
 
     res = Req.get(@api_prefix)

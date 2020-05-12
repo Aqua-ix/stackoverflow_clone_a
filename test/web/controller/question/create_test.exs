@@ -42,7 +42,7 @@ defmodule StackoverflowCloneA.Controller.Question.CreateTest do
     ]
     Enum.each(invalid_bodies, fn body ->
       res = Req.post_json(@api_prefix, body, @header)
-      IO.inspect(res)
+      #IO.inspect(res)
       assert res.status              == 400
       assert Jason.decode!(res.body) == %{
         "code"        => "400-06",
