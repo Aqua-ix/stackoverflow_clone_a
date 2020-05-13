@@ -1,5 +1,6 @@
 defmodule StackoverflowCloneA.Controller.Question.UpdateTest do
   use StackoverflowCloneA.CommonCase
+  #alias StackoverflowCloneA.Model.Question
   alias StackoverflowCloneA.Repo.Question, as: RQ
   alias StackoverflowCloneA.TestData.QuestionData
 
@@ -10,17 +11,14 @@ defmodule StackoverflowCloneA.Controller.Question.UpdateTest do
 
   describe "update/1 " do
     test "should update question" do
-      # userを取得する処理をmock
       user = StackoverflowCloneA.TestData.UserData.model()
       mock_fetch_me_plug(user) 
     
-      # Questionを取得する処理をmock
       :meck.expect(RQ, :retrieve, fn(id, _key) ->
         assert id == @question._id
         {:ok, @question}
       end)
     
-      # Questionを更新する処理をmock
       :meck.expect(RQ, :update, fn(data, id, _key) ->
         assert id == @question._id
         assert data == %{data: %{"$set" => %{title: "title"}}}
@@ -30,6 +28,34 @@ defmodule StackoverflowCloneA.Controller.Question.UpdateTest do
       res = Req.put_json(@api_prefix, @body, @header)
       assert res.status               == 200
       assert Jason.decode!(res.body) == QuestionData.gear()
+    end
+
+    test "should return InvalidCredential" <> 
+          "when missing or poster of this Question is different of login user." do
+      user = StackoverflowCloneA.TestData.UserData.model()
+      mock_fetch_me_plug(user)
+      :meck.expect(RQ, :retrieve, fn(id, _key) ->
+        assert id == @question._id
+        {:ok, other_user_question} = StackoverflowCloneA.Model.Question.Data.new(
+          %{
+            "title" => "title", 
+            "body" => "body",
+            "user_id" => "other_user_id", 
+            "like_voter_ids" => [], 
+            "dislike_voter_ids" => [], 
+            "comments" => []
+          })
+        IO.inspect(@question)
+        {:ok, %{@question | data: other_user_question}}
+      end)
+
+      res = Req.put_json(@api_prefix, @body, @header)
+      assert res.status              == 401
+      assert Jason.decode!(res.body) == %{
+        "code"        => "401-00",
+        "description" => "The given credential is invalid.",
+        "error"       => "InvalidCredential",
+      }
     end
 
     test "should return ResourceNotFoundError when specified question is not found" do
@@ -46,6 +72,5 @@ defmodule StackoverflowCloneA.Controller.Question.UpdateTest do
         "error"       => "ResourceNotFound",
       }
     end
-
   end
 end

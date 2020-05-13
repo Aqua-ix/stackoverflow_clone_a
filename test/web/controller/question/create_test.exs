@@ -31,6 +31,7 @@ defmodule StackoverflowCloneA.Controller.Question.CreateTest do
       assert res.status               == 200
       assert Poison.decode!(res.body) == QuestionData.gear()
     end
+
     test "should return BadRequestError when request body is invalid" do
       invalid_bodies = [
         %{                                       "body" => "body"},

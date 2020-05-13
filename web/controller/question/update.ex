@@ -21,8 +21,6 @@ defmodule StackoverflowCloneA.Controller.Question.Update do
   defun update(%Conn{request: %Request{path_matches: %{id: id}, body: body}, assigns: %{me: %User{_id: user_id}}} = conn) :: Conn.t do
     # 第二引数で指定したidのquestionを取得するための関数です。
     with_question(conn, id, fn question ->
-      # 更新対象のquestionのuser_idとログインユーザの_idが一致するか確認する(この判定ロジックを書いてみましょう)
-      ## 一致しない場合、下記のようにエラーを返す
       if question.data.user_id != user_id do
         ErrorJson.json_by_error(conn, InvalidCredential.new())
       else
