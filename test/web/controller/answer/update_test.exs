@@ -12,7 +12,7 @@ defmodule StackoverflowCloneA.Controller.Answer.UpdateTest do
     test "should update answer" do
       # userを取得する処理をmock
       user = StackoverflowCloneA.TestData.UserData.model()
-      mock_fetch_me_plug(user) 
+      mock_fetch_me_plug(user)
     
       # Answerを取得する処理をmock
       :meck.expect(RA, :retrieve, fn(id, _key) ->
@@ -30,6 +30,28 @@ defmodule StackoverflowCloneA.Controller.Answer.UpdateTest do
       res = Req.put_json(@api_prefix, @body, @header)
       assert res.status               == 200
       assert Jason.decode!(res.body) == AnswerData.gear()
+    end
+
+    test "should return InvalidCredentialError when credential is invalid or missing" do
+      :meck.expect(RA, :retrieve, fn(id, _key) ->
+       assert id == @answer._id
+       {:ok, other_user_answer} = StackoverflowCloneA.Model.Answer.Data.new(
+         %{
+           "body"         => "body",
+           "user_id"      => "other_user_id",       
+           "question_id"  => "question_id",
+           "comments"     => [],   
+         })
+       {:ok, %{@answer | data: other_user_answer}}
+      end)
+        
+      res = Req.put_json(@api_prefix, @body, @header)
+      assert res.status              == 401
+      assert Jason.decode!(res.body) == %{
+        "code"        => "401-00",
+        "description" => "The given credential is invalid.",
+        "error"       => "InvalidCredential",
+      }
     end
 
     test "should return ResourceNotFoundError when specified answer is not found" do
