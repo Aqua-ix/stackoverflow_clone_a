@@ -18,7 +18,6 @@ defmodule StackoverflowCloneA.Controller.Question.Index do
         ErrorJson.json_by_error(conn, BadRequest.new())
       {:ok, validated} ->
         query = convert_to_dodai_req_query(validated)
-        IO.inspect(query)
         {:ok, question} = RQ.retrieve_list(query, StackoverflowCloneA.Dodai.root_key())
         Conn.json(conn, 200, Enum.map(question, &Helper.to_response_body(&1)))
     end

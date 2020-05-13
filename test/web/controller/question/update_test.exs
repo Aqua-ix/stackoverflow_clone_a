@@ -45,7 +45,6 @@ defmodule StackoverflowCloneA.Controller.Question.UpdateTest do
             "dislike_voter_ids" => [], 
             "comments" => []
           })
-        IO.inspect(@question)
         {:ok, %{@question | data: other_user_question}}
       end)
 
