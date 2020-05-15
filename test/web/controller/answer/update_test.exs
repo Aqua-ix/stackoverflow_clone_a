@@ -6,7 +6,7 @@ defmodule StackoverflowCloneA.Controller.Answer.UpdateTest do
   @answer   AnswerData.model()
   @api_prefix "/v1/answer/#{@answer._id}"
   @body       %{"body" => "body"}
-  @header     %{"authorization" => "hYniRi3lFlsFVMmERimC"}
+  @header     %{"authorization" => "duQZTqfTSRb0q97aG07K"}
 
   describe "update/1 " do
     test "should update answer" do

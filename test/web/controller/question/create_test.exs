@@ -6,7 +6,7 @@ defmodule StackoverflowCloneA.Controller.Question.CreateTest do
 
   @question   QuestionData.model()
   @api_prefix "/v1/question/"
-  @header     %{"authorization" => "hYniRi3lFlsFVMmERimC"}
+  @header     %{"authorization" => "duQZTqfTSRb0q97aG07K"}
 
   describe "create/1 " do
     test "should create question" do

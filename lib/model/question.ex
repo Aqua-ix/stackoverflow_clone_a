@@ -9,10 +9,13 @@ defmodule StackoverflowCloneA.Model.Question do
   defmodule VoterIdList do
     use Croma.SubtypeOfList, elem_module: StackoverflowCloneA.DodaiId
   end
+  defmodule CommentBody do
+    use Croma.SubtypeOfString, pattern: ~R/\A.{1,1000}\z/u
+  end
   defmodule Comment do
     use Croma.Struct, recursive_new?: true, fields: [
-      id: StackoverflowCloneA.DodaiId,
-      body: Body,
+      id: Croma.String,
+      body: CommentBody,
       user_id: StackoverflowCloneA.DodaiId,
       created_at: Croma.String,
     ]
