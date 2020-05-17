@@ -1,24 +1,24 @@
 defmodule StackoverflowCloneA.Controller.Question.CreateTest do
   use StackoverflowCloneA.CommonCase
   alias StackoverflowCloneA.Repo.Question, as: RQ
-  alias StackoverflowCloneA.TestData.QuestionData
   alias StackoverflowCloneA.Model.Question
+  alias StackoverflowCloneA.TestData.{QuestionData, UserData}
 
   @question   QuestionData.model()
+  @user       UserData.model()
   @api_prefix "/v1/question/"
-  @header     %{"authorization" => "duQZTqfTSRb0q97aG07K"}
+  @header     %{"authorization" => "user_credential"}
 
   describe "create/1 " do
     test "should create question" do
-      user = StackoverflowCloneA.TestData.UserData.model()
-      mock_fetch_me_plug(user) 
+      mock_fetch_me_plug(@user)
     
       :meck.expect(RQ, :insert, fn(data, _key) ->
         assert data == %{
           data: %Question.Data{
             title:             "title",
             body:              "body",
-            user_id:           user._id,
+            user_id:           @user._id,
             like_voter_ids:    [],
             dislike_voter_ids: [],
             comments:          [],
@@ -33,6 +33,8 @@ defmodule StackoverflowCloneA.Controller.Question.CreateTest do
     end
 
     test "should return BadRequestError when request body is invalid" do
+      mock_fetch_me_plug(@user)
+
       invalid_bodies = [
         %{                                       "body" => "body"},
         %{"title" => "",                         "body" => "body"},

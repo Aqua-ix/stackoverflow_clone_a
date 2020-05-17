@@ -2,15 +2,18 @@ defmodule StackoverflowCloneA.Controller.Question.UpdateTest do
   use StackoverflowCloneA.CommonCase
   #alias StackoverflowCloneA.Model.Question
   alias StackoverflowCloneA.Repo.Question, as: RQ
-  alias StackoverflowCloneA.TestData.QuestionData
+  alias StackoverflowCloneA.TestData.{QuestionData, UserData}
 
   @question   QuestionData.model()
+  @user       UserData.model()
   @api_prefix "/v1/question/#{@question._id}"
   @body       %{"title" => "title"}
-  @header     %{"authorization" => "duQZTqfTSRb0q97aG07K"}
+  @header     %{"authorization" => "user_credential"}
 
   describe "update/1 " do
     test "should update question" do
+      mock_fetch_me_plug(@user)
+
       user = StackoverflowCloneA.TestData.UserData.model()
       mock_fetch_me_plug(user) 
     
@@ -30,8 +33,9 @@ defmodule StackoverflowCloneA.Controller.Question.UpdateTest do
       assert Jason.decode!(res.body) == QuestionData.gear()
     end
 
-    test "should return InvalidCredential" <> 
-          "when missing or poster of this Question is different of login user." do
+    test "should return InvalidCredential when user id is not same as the questioner id." do
+      mock_fetch_me_plug(@user)
+
       user = StackoverflowCloneA.TestData.UserData.model()
       mock_fetch_me_plug(user)
       :meck.expect(RQ, :retrieve, fn(id, _key) ->
@@ -58,6 +62,8 @@ defmodule StackoverflowCloneA.Controller.Question.UpdateTest do
     end
 
     test "should return ResourceNotFoundError when specified question is not found" do
+      mock_fetch_me_plug(@user)
+      
       :meck.expect(RQ, :retrieve, fn(_id, _key) ->
         {:error, %Dodai.ResourceNotFound{}}
       end)

@@ -1,15 +1,18 @@
 defmodule StackoverflowCloneA.Controller.Answer.UpdateTest do
   use StackoverflowCloneA.CommonCase
   alias StackoverflowCloneA.Repo.Answer, as: RA
-  alias StackoverflowCloneA.TestData.AnswerData
+  alias StackoverflowCloneA.TestData.{AnswerData, UserData}
 
-  @answer   AnswerData.model()
+  @answer     AnswerData.model()
+  @user       UserData.model()
   @api_prefix "/v1/answer/#{@answer._id}"
   @body       %{"body" => "body"}
-  @header     %{"authorization" => "duQZTqfTSRb0q97aG07K"}
+  @header     %{"authorization" => "user_credential"}
 
   describe "update/1 " do
     test "should update answer" do
+      mock_fetch_me_plug(@user)
+
       # userを取得する処理をmock
       user = StackoverflowCloneA.TestData.UserData.model()
       mock_fetch_me_plug(user)
@@ -32,7 +35,9 @@ defmodule StackoverflowCloneA.Controller.Answer.UpdateTest do
       assert Jason.decode!(res.body) == AnswerData.gear()
     end
 
-    test "should return InvalidCredentialError when credential is invalid or missing" do
+    test "should return InvalidCredential when user id is not same as the answer id." do
+      mock_fetch_me_plug(@user)
+
       :meck.expect(RA, :retrieve, fn(id, _key) ->
        assert id == @answer._id
        {:ok, other_user_answer} = StackoverflowCloneA.Model.Answer.Data.new(
@@ -55,6 +60,8 @@ defmodule StackoverflowCloneA.Controller.Answer.UpdateTest do
     end
 
     test "should return ResourceNotFoundError when specified answer is not found" do
+      mock_fetch_me_plug(@user)
+
       :meck.expect(RA, :retrieve, fn(_id, _key) ->
         {:error, %Dodai.ResourceNotFound{}}
       end)

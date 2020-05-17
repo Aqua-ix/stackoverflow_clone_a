@@ -4,18 +4,17 @@ defmodule StackoverflowCloneA.Controller.Answer.CreateTest do
   alias StackoverflowCloneA.Repo.Question, as: RQ
   alias StackoverflowCloneA.Repo.Answer, as: RA
   alias StackoverflowCloneA.Model.Answer
-  alias StackoverflowCloneA.TestData.QuestionData
-  alias StackoverflowCloneA.TestData.AnswerData
+  alias StackoverflowCloneA.TestData.{QuestionData, AnswerData, UserData}
 
   @question   QuestionData.model()
-  @answer   AnswerData.model()
+  @answer     AnswerData.model()
+  @user       UserData.model()
   @api_prefix "/v1/answer/"
-  @header     %{"authorization" => "duQZTqfTSRb0q97aG07K"}
+  @header     %{"authorization" => "user_credential"}
 
   describe "create/1 " do
     test "should create answer" do
-      user = StackoverflowCloneA.TestData.UserData.model()
-      mock_fetch_me_plug(user)
+      mock_fetch_me_plug(@user)
 
       :meck.expect(RQ, :retrieve, fn(id, _key) ->
         assert id == @question._id
@@ -27,7 +26,7 @@ defmodule StackoverflowCloneA.Controller.Answer.CreateTest do
           data: %Answer.Data{
             body:              "body",
             question_id:       "question_id",
-            user_id:           user._id,
+            user_id:           @user._id,
             comments:          [],
           }
         }
@@ -40,6 +39,8 @@ defmodule StackoverflowCloneA.Controller.Answer.CreateTest do
     end
 
     test "should return BadRequestError when request body is invalid" do
+      mock_fetch_me_plug(@user)
+
       invalid_bodies = [
         %{"body" => "body"},
         %{"question_id" => "question_id"},
@@ -57,6 +58,8 @@ defmodule StackoverflowCloneA.Controller.Answer.CreateTest do
     end
 
     test "should return ResourceNotFoundError when specific question is not found" do
+      mock_fetch_me_plug(@user)
+
       :meck.expect(RQ, :retrieve, fn(_id, _key) ->
         {:error, %Dodai.ResourceNotFound{}}
       end)

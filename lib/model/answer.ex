@@ -4,9 +4,6 @@ defmodule StackoverflowCloneA.Model.Answer do
   defmodule Body do
     use Croma.SubtypeOfString, pattern: ~R/\A.{1,3000}\z/u
   end
-  # defmodule VoterIdList do
-  #   use Croma.SubtypeOfList, elem_module: StackoverflowCloneA.DodaiId
-  # end
   defmodule Comment do
     use Croma.Struct, recursive_new?: true, fields: [
       id: StackoverflowCloneA.DodaiId,

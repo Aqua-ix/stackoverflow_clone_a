@@ -9,7 +9,6 @@ defmodule StackoverflowCloneA.Controller.Comment.Create do
 
   plug StackoverflowCloneA.Plug.FetchMe, :fetch, []
 
-  # パラメータvalidation用のmodule
   defmodule RequestBody do
     use Croma.Struct, fields: [
       body: Question.CommentBody,
@@ -39,11 +38,9 @@ defmodule StackoverflowCloneA.Controller.Comment.Create do
             Conn.json(conn, 200, comment)
           {:error, %Dodai.ResourceNotFound{}} -> 
             ErrorJson.json_by_error(conn, ResourceNotFound.new())
-          error ->
-            IO.inspect error
         end
-        
     end
+    
   end
 
   defun to_create_document(
