@@ -21,7 +21,6 @@ defmodule StackoverflowCloneA.Controller.Question.Create do
   defun create(%Conn{assigns: %{me: %User{_id: user_id}}} = conn :: v[Conn.t]) :: Conn.t do
     # RequestBody.new(body)がbodyが上で定義したRequestBodyの型をみたいしているかをチェック
     body = conn.request.body
-    IO.inspect(body)
     case RequestBody.new(body) do
       # body値がRequestBodyの条件を満たしていない場合
       {:error, _}      ->

@@ -7,7 +7,7 @@ defmodule StackoverflowCloneA.Controller.Question.UpdateTest do
   @question   QuestionData.model()
   @user       UserData.model()
   @api_prefix "/v1/question/#{@question._id}"
-  @body       %{"title" => "title"}
+  @body       %{"title" => "title", "tags" => ["tag1", "tag2"]}
   @header     %{"authorization" => "user_credential"}
 
   describe "update/1 " do
@@ -24,7 +24,7 @@ defmodule StackoverflowCloneA.Controller.Question.UpdateTest do
     
       :meck.expect(RQ, :update, fn(data, id, _key) ->
         assert id == @question._id
-        assert data == %{data: %{"$set" => %{title: "title"}}}
+        assert data == %{data: %{"$set" => %{title: "title", tags: ["tag1", "tag2"]}}}
         {:ok, @question}
       end)
     
@@ -47,7 +47,8 @@ defmodule StackoverflowCloneA.Controller.Question.UpdateTest do
             "user_id" => "other_user_id", 
             "like_voter_ids" => [], 
             "dislike_voter_ids" => [], 
-            "comments" => []
+            "comments" => [],
+            "tags" => ["tag1", "tag2"]
           })
         {:ok, %{@question | data: other_user_question}}
       end)

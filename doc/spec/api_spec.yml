@@ -154,6 +154,7 @@ paths:
             example:
               title: "title"
               body: "body"
+              tags: ["tag1", "tag2"]
       responses:
         200:
           description: Update a `Question`
@@ -664,7 +665,7 @@ paths:
 definitions:
   question:
     type: object
-    required: ["id", "title", "body", "user_id", "created_at", "comments", "like_voter_ids", "dislike_voter_ids"]
+    required: ["id", "title", "body", "user_id", "created_at", "comments", "like_voter_ids", "dislike_voter_ids", "tags"]
     properties:
       id:
         description: "ID of a `Question`"
@@ -700,6 +701,11 @@ definitions:
         type: array
         items:
           type: string
+      tags:
+        description: "Tags of this `Question`"
+        type: array
+        items:
+          $ref: '#/definitions/tag'
     example:
       id: "5a94fc0c38000038007df50d"
       title: "title"
@@ -724,6 +730,10 @@ definitions:
         "589d196d22000036137e473b"
       ]
       dislike_voter_ids: []
+      tags: [
+       "tag1",
+       "tag2"
+      ]
   answer:
     type: object
     required: ["id", "body", "question_id", "user_id", "created_at", "comments"]
@@ -793,6 +803,15 @@ definitions:
       user_id: "589d196d22000036137e473b"
       body: "body"
       created_at: "2018-02-27T06:34:52+00:00"
+  tag:
+    type: object
+    required: ["name"]
+    properties:
+      name:
+        description: "Name of a `Tag`"
+        type: string
+    example:
+      name: "unsolved"
   vote:
     type: object
     required: ["like_voter_ids", "dislike_voter_ids"]

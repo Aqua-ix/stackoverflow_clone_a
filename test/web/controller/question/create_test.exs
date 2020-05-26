@@ -22,12 +22,13 @@ defmodule StackoverflowCloneA.Controller.Question.CreateTest do
             like_voter_ids:    [],
             dislike_voter_ids: [],
             comments:          [],
+            tags:              ["tag1", "tag2"]
           }
         }
         {:ok, @question}
       end)
 
-      res = Req.post_json(@api_prefix, %{"title" => "title", "body" => "body"}, @header)
+      res = Req.post_json(@api_prefix, %{"title" => "title", "body" => "body", "tags" => ["tag1", "tag2"]}, @header)
       assert res.status               == 200
       assert Poison.decode!(res.body) == QuestionData.gear()
     end
@@ -36,12 +37,15 @@ defmodule StackoverflowCloneA.Controller.Question.CreateTest do
       mock_fetch_me_plug(@user)
 
       invalid_bodies = [
-        %{                                       "body" => "body"},
-        %{"title" => "",                         "body" => "body"},
-        %{"title" => String.duplicate("a", 101), "body" => "body"},
-        %{"title" => "body"},
-        %{"title" => "body",                     "body" => ""},
-        %{"title" => "body",                     "body" => String.duplicate("a", 3001)},
+        %{                                       "body" => "body", "tags" => ["tag1", "tag2"]},
+        %{"title" => "title",                                      "tags" => ["tag1", "tag2"]},
+        %{"title" => String.duplicate("a", 101), "body" => "body", "tags" => ["tag1", "tag2"]},
+        %{"title" => "title",                    "body" => String.duplicate("a", 3001), "tags" => ["tag1", "tag2"]},
+        %{"title" => "",                         "body" => "body", "tags" => ["tag1", "tag2"]},
+        %{"title" => "title",                    "body" => "",     "tags" => ["tag1", "tag2"]},
+        %{"title" => "title",                    "body" => "body", "tags" => ["", "tag2"]},
+        %{"title" => "title",                    "body" => "body", "tags" => ""},
+        %{"title" => "title",                    "body" => "body", "tags" => [String.duplicate("a", 11)]},
       ]
       Enum.each(invalid_bodies, fn body ->
         res = Req.post_json(@api_prefix, body, @header)

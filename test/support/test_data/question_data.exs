@@ -33,6 +33,10 @@ defmodule StackoverflowCloneA.TestData.QuestionData do
         "dislike_voter_ids" => [
           "dislike_user_id"
         ],
+        "tags" => [
+          "tag1",
+          "tag2"
+        ]
       }
     }
 

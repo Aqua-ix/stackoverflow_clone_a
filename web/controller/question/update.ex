@@ -13,8 +13,9 @@ defmodule StackoverflowCloneA.Controller.Question.Update do
   defmodule RequestBody do
     alias StackoverflowCloneA.Model.Question
     use Croma.Struct, fields: [
-      title:              Croma.TypeGen.nilable(Question.Title),
-      body:               Croma.TypeGen.nilable(Question.Body),
+      title:  Croma.TypeGen.nilable(Question.Title),
+      body:   Croma.TypeGen.nilable(Question.Body),
+      tags:    Croma.TypeGen.nilable(Question.TagList),
     ]
   end
 
