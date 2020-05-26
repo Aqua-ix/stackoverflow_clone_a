@@ -15,8 +15,8 @@ const QuestionCreatePage: FC = () => {
   const handleLogin = () => {
     history.push(paths.login)
   }
-  const handleSubmit = (title: string, body: string) => {
-    createQuestion(title, body).then((item: Question) => {
+  const handleSubmit = (title: string, body: string, tags: string[]) => {
+    createQuestion(title, body, tags).then((item: Question) => {
       history.push(paths.question(item.id))
     })
   }

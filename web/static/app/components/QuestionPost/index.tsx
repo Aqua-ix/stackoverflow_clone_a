@@ -7,19 +7,19 @@ import { TITLE_MAX_LENGTH, BODY_MAX_LENGTH, INPUT_MIN_LENGTH } from '@/app/commo
 import { getCurrentUserId } from '@/app/common/utils'
 
 interface Props {
-  readonly handleSubmit: (title: string, body: string) => void
+  readonly handleSubmit: (title: string, body: string, tags: string[]) => void
 }
 
 export const QuestionPost: FC<Props> = ({ handleSubmit }: Props) => {
   const [state, dispatch] = useReducer(reducer, initialState)
-  const { title, body } = state
+  const { title, body, tags } = state
 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => dispatch(actions.setTitle(e.target.value))
   const handleBodyChange = (e: ChangeEvent<HTMLTextAreaElement>) => dispatch(actions.setBody(e.target.value))
-  const handleTagChange = (e: ChangeEvent<HTMLInputElement>) => dispatch(actions.setTags(e.target.value))
+  const handleTagChange = (e: ChangeEvent<HTMLInputElement>) => dispatch(actions.setTags(e.target.value.split(",")))
 
   const handleClickSubmit = (e: FormEvent<HTMLFormElement>) => {
-    handleSubmit(title, body)
+    handleSubmit(title, body, tags)
     e.preventDefault()
   }
 
@@ -59,7 +59,6 @@ export const QuestionPost: FC<Props> = ({ handleSubmit }: Props) => {
             <input
               maxLength={TITLE_MAX_LENGTH}
               minLength={INPUT_MIN_LENGTH}
-              required
               className={clsx(style.tagEdit, style.formControl)}
               type="text"
               name="tags"

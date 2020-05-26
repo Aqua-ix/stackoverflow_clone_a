@@ -3,7 +3,7 @@ import { CreateActionTypes } from '@/app/common/typeHelper'
 interface State {
   title: string
   body: string
-  tags: string
+  tags: string[]
 }
 
 const Type = {
@@ -15,7 +15,7 @@ const Type = {
 export const actions = {
   setTitle: (title: string) => ({ type: Type.SET_TITLE, payload: title }),
   setBody: (body: string) => ({ type: Type.SET_BODY, payload: body }),
-  setTags: (tags: string) => ({ type: Type.SET_TAGS, payload: tags }),
+  setTags: (tags: string[]) => ({ type: Type.SET_TAGS, payload: tags }),
 }
 
 type ActionType = CreateActionTypes<typeof actions>
@@ -23,7 +23,7 @@ type ActionType = CreateActionTypes<typeof actions>
 export const initialState: State = {
   title: '',
   body: '',
-  tags: '',
+  tags: [],
 }
 
 export const reducer = (state: State, action: ActionType): State => {

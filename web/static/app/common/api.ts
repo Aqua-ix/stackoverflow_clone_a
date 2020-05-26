@@ -33,12 +33,13 @@ export const retrieveQuestions = (userId?: string): Promise<Question[]> =>
 export const retrieveQuestion = (id: string): Promise<Question> =>
   HttpClient.get(`v1/question/${id}`, {}).then(({ data }) => data)
 
-export const createQuestion = (title: string, body: string): Promise<Question> =>
+export const createQuestion = (title: string, body: string, tags: string[]): Promise<Question> =>
   HttpClient.post(
     '/v1/question',
     {
       title,
       body,
+      tags,
     },
     { headers: { Authorization: getSessionKey() } }
   ).then(({ data }) => data)
