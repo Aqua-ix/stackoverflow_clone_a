@@ -16,6 +16,7 @@ export const QuestionPost: FC<Props> = ({ handleSubmit }: Props) => {
 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => dispatch(actions.setTitle(e.target.value))
   const handleBodyChange = (e: ChangeEvent<HTMLTextAreaElement>) => dispatch(actions.setBody(e.target.value))
+  const handleTagChange = (e: ChangeEvent<HTMLInputElement>) => dispatch(actions.setTags(e.target.value))
 
   const handleClickSubmit = (e: FormEvent<HTMLFormElement>) => {
     handleSubmit(title, body)
@@ -51,6 +52,18 @@ export const QuestionPost: FC<Props> = ({ handleSubmit }: Props) => {
               className={clsx(style.bodyEdit, style.formControl)}
               name="body"
               onChange={handleBodyChange}
+            />
+            <br />
+            <div className={style.label}>{words.questionCreate.tag}</div>
+          <br />
+            <input
+              maxLength={TITLE_MAX_LENGTH}
+              minLength={INPUT_MIN_LENGTH}
+              required
+              className={clsx(style.tagEdit, style.formControl)}
+              type="text"
+              name="tags"
+              onChange={handleTagChange}
             />
             <br />
             <div className={style.formGroup}>

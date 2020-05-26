@@ -29,6 +29,7 @@ const QuestionEditForm: FC<QuestionEditFormProps> = ({
   const [state, dispatch] = useReducer(reducer, {
     title: question.title,
     body: question.body,
+    tags: question.tags,
   })
   const { title, body } = state
 
