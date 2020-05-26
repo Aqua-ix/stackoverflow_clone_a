@@ -63,5 +63,6 @@ export default {
     loginToAnswer: '回答するにはログインしてください。',
     commentAdd: 'コメントを追加',
     post: '投稿',
+    time: '質問日時',
   },
 } as const
