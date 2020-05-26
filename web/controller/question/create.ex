@@ -13,13 +13,15 @@ defmodule StackoverflowCloneA.Controller.Question.Create do
   defmodule RequestBody do
     use Croma.Struct, recursive_new?: true, fields: [
       title: Question.Title, 
-      body:  Question.Body
+      body:  Question.Body,
+      tags:  Question.TagList,
     ]
   end
 
   defun create(%Conn{assigns: %{me: %User{_id: user_id}}} = conn :: v[Conn.t]) :: Conn.t do
     # RequestBody.new(body)がbodyが上で定義したRequestBodyの型をみたいしているかをチェック
     body = conn.request.body
+    IO.inspect(body)
     case RequestBody.new(body) do
       # body値がRequestBodyの条件を満たしていない場合
       {:error, _}      ->
@@ -30,12 +32,13 @@ defmodule StackoverflowCloneA.Controller.Question.Create do
       # body値がRequestBodyの条件を満たしている場合
       {:ok, validated} ->
         data = %{
-          "comments"        => [],
+          "comments"          => [],
           "like_voter_ids"    => [],
           "dislike_voter_ids" => [],
-          "title"           => validated.title,
-          "body"            => validated.body,
-          "user_id"          => user_id,
+          "title"             => validated.title,
+          "body"              => validated.body,
+          "user_id"           => user_id,
+          "tags"              => validated.tags
         } |> Question.Data.new!()
 
         # 指定したdataでinsert関数を実行      

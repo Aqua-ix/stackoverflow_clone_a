@@ -23,6 +23,12 @@ defmodule StackoverflowCloneA.Model.Question do
   defmodule CommentList do
     use Croma.SubtypeOfList, elem_module: Comment
   end
+  defmodule Tag do
+    use Croma.SubtypeOfString, pattern: ~R/\A.{1,10}\z/u
+  end
+  defmodule TagList do
+    use Croma.SubtypeOfList, elem_module: Tag
+  end
   defmodule StackoverflowCloneA.DodaiId do
     # See [RFC3986](https://tools.ietf.org/html/rfc3986#section-2.3) for the specifications of URL-safe characters
     @url_safe_chars "0-9A-Za-z\-._~"
@@ -35,5 +41,6 @@ defmodule StackoverflowCloneA.Model.Question do
     like_voter_ids:    VoterIdList,
     dislike_voter_ids: VoterIdList,
     comments:          CommentList,
+    tags:              TagList,
   ]
 end
