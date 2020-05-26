@@ -17,7 +17,7 @@ interface QuestionEditFormProps {
   question: QuestionModels
   children: ReactNode
   endQuestionEdit: () => void
-  updateQuestion: (title: string, body: string) => void
+  updateQuestion: (title: string, body: string, tags:string[]) => void
 }
 
 const QuestionEditForm: FC<QuestionEditFormProps> = ({
@@ -31,18 +31,20 @@ const QuestionEditForm: FC<QuestionEditFormProps> = ({
     body: question.body,
     tags: question.tags,
   })
-  const { title, body } = state
+  const { title, body, tags } = state
 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => dispatch(actions.setTitle(e.target.value))
   const handleBodyChange = (e: ChangeEvent<HTMLTextAreaElement>) => dispatch(actions.setBody(e.target.value))
+  const handleTagChange = (e: ChangeEvent<HTMLInputElement>) => dispatch(actions.setTags(e.target.value.split(",")))
   const handleSaveClick = () => {
-    updateQuestion(title, body)
+    updateQuestion(title, body, tags)
     endQuestionEdit()
   }
 
   return (
     <>
       {!title && <div className={style.errorEmpty}>{words.common.textErrorEmpty}</div>}
+      {words.questionCreate.title}
       <input
         maxLength={BODY_MAX_LENGTH}
         minLength={INPUT_MIN_LENGTH}
@@ -52,9 +54,20 @@ const QuestionEditForm: FC<QuestionEditFormProps> = ({
         onChange={handleTitleChange}
         value={title}
       />
+      {words.questionCreate.tag}
+      <input
+        maxLength={BODY_MAX_LENGTH}
+        minLength={INPUT_MIN_LENGTH}
+        className={clsx(style.tagEdit, style.formControl)}
+        type="text"
+        name="tags"
+        onChange={handleTagChange}
+        value={tags}
+      />
 
       <hr className={style.hr} />
       <div className={style.mainArea}>
+        {words.questionCreate.body}
         {children}
         <div className={style.contentArea}>
           {!body && <div className={style.errorEmpty}>{words.common.textErrorEmpty}</div>}
@@ -67,7 +80,7 @@ const QuestionEditForm: FC<QuestionEditFormProps> = ({
             value={body}
           />
           <div className={style.formGroup}>
-            <button type="button" className={style.buttonSave} onClick={handleSaveClick} disabled={!title || !body}>
+            <button type="button" className={style.buttonSave} onClick={handleSaveClick} disabled={!title || !body || !tags}>
               {words.common.save}
             </button>
             <button type="button" className={style.buttonCancel} onClick={endQuestionEdit}>
@@ -139,7 +152,7 @@ interface QuestionProps {
   readonly userId: string
   readonly questionId: string
   readonly question: QuestionModels
-  readonly updateQuestion: (title: string, body: string, questionId: string) => void
+  readonly updateQuestion: (title: string, body: string, questionId: string, tags: string[]) => void
   readonly createQuestionComment: (body: string, questionId: string) => void
   readonly updateQuestionComment: (body: string, questionId: string, id: string) => void
   readonly createVote: (questionId: string, voteType: VoteType) => void
@@ -159,7 +172,7 @@ export const Question: FC<QuestionProps> = ({
   const updateComment = (commentId: string) => (body: string) => updateQuestionComment(body, questionId, commentId)
   const createComment = (body: string) => createQuestionComment(body, questionId)
 
-  const updateQuestionBody = useCallback((title: string, body: string) => updateQuestion(title, body, questionId), [
+  const updateQuestionBody = useCallback((title: string, body: string, tags:string[]) => updateQuestion(title, body, questionId, tags), [
     questionId,
     updateQuestion,
   ])

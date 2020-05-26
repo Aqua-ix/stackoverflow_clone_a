@@ -61,8 +61,8 @@ const QuestionDetailPage: FC = () => {
       return retrieveUpdatedQuestion()
     })
   }
-  const handleUpdateQuestion = (title: string, body: string, id: string) => {
-    updateQuestion(id, title, body).then(item => {
+  const handleUpdateQuestion = (title: string, body: string, id: string, tags: string[]) => {
+    updateQuestion(id, title, body, tags).then(item => {
       setQuestion(item)
     })
   }

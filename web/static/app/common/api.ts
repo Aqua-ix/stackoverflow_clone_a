@@ -44,12 +44,13 @@ export const createQuestion = (title: string, body: string, tags: string[]): Pro
     { headers: { Authorization: getSessionKey() } }
   ).then(({ data }) => data)
 
-export const updateQuestion = (id: string, title: string, body: string): Promise<Question> =>
+export const updateQuestion = (id: string, title: string, body: string, tags: string[]): Promise<Question> =>
   HttpClient.put(
     `/v1/question/${id}`,
     {
       title,
       body,
+      tags,
     },
     { headers: { Authorization: getSessionKey() } }
   ).then(({ data }) => data)
