@@ -116,12 +116,6 @@ const QuestionDetailPage: FC = () => {
             createVote={handleCreateVote}
           />
         )}
-         <div className={style.taggroup}>
-          {question?.tags[0] ? question.tags.map((tag:string) =>
-            <span> <button　className={style.button}>{tag}</button> </span>
-          ): null}
-          </div>
-       
         <AnswerList
           userId={currentUserId}
           questionId={id}

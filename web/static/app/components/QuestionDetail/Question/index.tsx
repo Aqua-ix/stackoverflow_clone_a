@@ -90,6 +90,11 @@ interface QuestionViewProps {
 const QuestionView: FC<QuestionViewProps> = ({ children, question, isMyQuestion, beginQuestionEdit }: QuestionViewProps) => (
   <>
     <div className={style.pageTitle}>{question.title}</div>
+    <div className={style.taggroup}>
+      {question.tags[0] ? question.tags.map((tag:string) =>
+        <span> <button　className={style.button}>{tag}</button> </span>
+      ): null}
+    </div>
     <hr className={style.hr} />
     <div className={style.mainArea}>
       {children}
