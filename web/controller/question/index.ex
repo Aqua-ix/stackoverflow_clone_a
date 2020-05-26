@@ -9,6 +9,7 @@ defmodule StackoverflowCloneA.Controller.Question.Index do
   defmodule QueryParams do
     use Croma.Struct, fields: [
       user_id:  Croma.TypeGen.nilable(StackoverflowCloneA.DodaiId),
+      tags:  Croma.TypeGen.nilable(Croma.String),
     ]
   end
 
