@@ -10,12 +10,10 @@ import { paths } from '@/app/common/paths'
 import { QUESTION_LIMIT } from '@/app/common/constants'
 import { retrieveQuestions, logout } from '@/app/common/api'
 import { getCurrentUserId } from '@/app/common/utils'
-
 const QuestionListPage: FC = () => {
   const [questions, setQuestions] = useState<Question[]>([]) // このコンポーネントはstateとして質問一覧のデータを保持する。
   const history = useHistory()
   const currentUserId = getCurrentUserId()
-
   // useEffect()でページが表示される時に実行される処理を設定する。
   // https://reactjs.org/docs/hooks-reference.html#useeffect
   useEffect(() => {
@@ -25,22 +23,19 @@ const QuestionListPage: FC = () => {
       setQuestions(items) // 取得した質問をこのコンポーネントのstateに保存する。stateを変更することで、コンポーネントの関数が再度実行される。
     })
   }, [])
-
   const handleLogin = () => {
     history.push(paths.login)
   }
-
+  const sortedQuestions = questions.sort((a, b) => b.createdAt.localeCompare(a.createdAt))
   return (
     <>
       <Header userId={currentUserId} handleLogin={handleLogin} handleLogout={logout} />
       <div className={style.main}>
         <div className={style.pageTitle}>{words.top.title}</div>
-
         <Link to={`${paths.questionCreate}`}>{words.top.question}</Link>
         <hr className={style.hr} />
-
         {/* 先頭からQUESTION_LIMITの件数だけ取り出して、それぞれQuestionItemに渡して表示をする */}
-        {questions.slice(0, QUESTION_LIMIT).map((question: Question) => (
+        {sortedQuestions.slice(0, QUESTION_LIMIT).map((question: Question) => (
           <QuestionItem key={`QuestionList_QuestionItem_${question.id}`} question={question} isUserIdShow />
         ))}
       </div>
@@ -48,5 +43,4 @@ const QuestionListPage: FC = () => {
     </>
   )
 }
-
 export default QuestionListPage

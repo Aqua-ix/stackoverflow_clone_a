@@ -9,4 +9,5 @@ export interface Question {
   readonly likeVoterIds: string[]
   readonly title: string
   readonly userId: string
+  tags:string[]
 }

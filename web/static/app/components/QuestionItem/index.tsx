@@ -16,7 +16,14 @@ export const QuestionItem: FC<Props> = ({ question, isUserIdShow }: Props) => (
       <Link to={paths.question(question.id)}>{question.title}</Link>
     </h5>
 
+    <div className={style.taggroup}>
+      {question.tags[0] ? question.tags.map((tag:string) =>
+        <span> <button　className={style.button}>{tag}</button> </span>
+      ): null}
+    </div>
+
     <div className={style.additional}>
+      {question.createdAt + ' '}
       {isUserIdShow && (
         <>
           {words.common.by}

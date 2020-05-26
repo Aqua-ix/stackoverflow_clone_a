@@ -42,6 +42,7 @@ export default {
   questionCreate: {
     title: 'タイトル',
     body: '本文',
+    tag: 'タグ',
     create: '投稿する',
     postQuestion: '質問を投稿する',
     notLoginBody: '質問を投稿するにはログインしてください。',
