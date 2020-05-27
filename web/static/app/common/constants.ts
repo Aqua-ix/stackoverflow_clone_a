@@ -4,3 +4,4 @@ export const TITLE_MAX_LENGTH = 100
 export const BODY_MAX_LENGTH = 3000
 export const INPUT_MIN_LENGTH = 1
 export const AUTHOR_MAX_LENGTH = 50
+export const TAG_MAX_LENGTH = 50

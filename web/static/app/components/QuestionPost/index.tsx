@@ -3,8 +3,9 @@ import clsx from 'clsx'
 import { initialState, reducer, actions } from '@/app/components/QuestionPost/reducer'
 import style from '@/app/components/QuestionPost/style.scss'
 import words from '@/assets/strings'
-import { TITLE_MAX_LENGTH, BODY_MAX_LENGTH, INPUT_MIN_LENGTH } from '@/app/common/constants'
+import { TITLE_MAX_LENGTH, TAG_MAX_LENGTH, BODY_MAX_LENGTH, INPUT_MIN_LENGTH } from '@/app/common/constants'
 import { getCurrentUserId } from '@/app/common/utils'
+import marked from 'marked'
 
 interface Props {
   readonly handleSubmit: (title: string, body: string, tags: string[]) => void
@@ -53,11 +54,14 @@ export const QuestionPost: FC<Props> = ({ handleSubmit }: Props) => {
               name="body"
               onChange={handleBodyChange}
             />
+            <div dangerouslySetInnerHTML={{
+            __html: marked(body)
+            }}></div>
             <br />
             <div className={style.label}>{words.questionCreate.tag}</div>
-          <br />
+            <br />
             <input
-              maxLength={TITLE_MAX_LENGTH}
+              maxLength={TAG_MAX_LENGTH}
               minLength={INPUT_MIN_LENGTH}
               className={clsx(style.tagEdit, style.formControl)}
               type="text"
