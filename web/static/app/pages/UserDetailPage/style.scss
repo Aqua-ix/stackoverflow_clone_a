@@ -1,7 +1,7 @@
 @import '~@/assets/css/commonStyle';
 
 .main {
-  width: 80%;
+  width: 85%;
   margin: 3rem auto auto;
 }
 
@@ -13,4 +13,10 @@
 .question,
 .answerList {
   margin-bottom: 2rem;
+}
+
+.container {
+  width: 100%;
+  display: -webkit-flex;
+  display: flex;
 }

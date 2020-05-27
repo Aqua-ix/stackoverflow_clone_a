@@ -43,7 +43,9 @@ export const QuestionItem: FC<Props> = ({ question, isUserIdShow }: Props) => (
     <h5 className={style.title}>
       <Link to={paths.question(question.id)}>{question.title}</Link>
     </h5>
-
+    <div className={style.bodytext}>
+      　{question.body}
+    </div>
     <div className={style.taggroup}>
       {question.tags[0] ? question.tags.map((tag:string) =>
         <span>

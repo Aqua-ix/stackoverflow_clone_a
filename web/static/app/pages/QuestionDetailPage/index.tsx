@@ -23,6 +23,7 @@ import {
   updateAnswerComment,
 } from '@/app/common/api'
 import { getCurrentUserId } from '@/app/common/utils'
+import { SideBar } from '@/app/components/SideBar'
 
 interface RouteParams {
   id: string
@@ -104,6 +105,8 @@ const QuestionDetailPage: FC = () => {
   return (
     <>
       <Header userId={currentUserId} handleLogin={handleLogin} handleLogout={logout} />
+      <div className={style.container}>
+      <SideBar/>
       <div className={style.main}>
         {question && (
           <Question
@@ -125,6 +128,7 @@ const QuestionDetailPage: FC = () => {
           updateAnswer={handleUpdateAnswer}
         />
         <AnswerPost userId={currentUserId} postAnswer={handlePostAnswer} />
+      </div>
       </div>
     </>
   )

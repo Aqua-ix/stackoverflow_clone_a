@@ -1,0 +1,97 @@
+@import '~@/assets/css/colorCommon';
+
+.sidebar {
+  border: 0.1rem solid;
+  border-top: transparent;
+  border-bottom: transparent;
+  border-left: transparent;
+  border-color: #e6e6fa;
+
+  width: 12rem;
+  padding-top: 5rem;
+  padding-left: 1.5rem;
+}
+.sidebar_item_fixed {
+  position: -webkit-sticky;
+  position: sticky;
+  margin-bottom: 0;
+  top: 1rem;
+  z-index: 1;
+}
+.sidebar_list{
+  list-style-type: none;
+  padding-bottom: 0.5rem;
+}
+
+.icon {
+  margin-right: 1.2rem;
+  font-size: 2.2rem;
+}
+
+.navbarDefault {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background-color: $header_navbar_background-color;
+  border-bottom: 0.1rem solid $header_navbar_border-bottom;
+}
+
+.navbarBrand {
+  margin: 1rem;
+  padding-top: 0.3125rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.3125rem;
+  padding-bottom: 0.5rem;
+  line-height: inherit;
+  white-space: nowrap;
+}
+
+.navbarBrand::before {
+  vertical-align: middle;
+  content: url('../../../assets/images/icon.png');
+  margin-right: 0.5rem;
+}
+
+.navbarText {
+  display: inline-block;
+  margin: 0 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.button {
+  width: auto;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  color: $header_button_color;
+  font-size: 0;
+  line-height: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.button:hover {
+  color: $header_button_hover_color;
+}
+
+.loginLink {
+  position: relative;
+  display: inline-block;
+  padding: 0.25em 0.5em;
+  color: $header_link_font_color;
+  font-weight: bold;
+  text-decoration: none;
+  background: $header_link_background_color;
+  border: solid 0.2rem $header_link_border_color;
+  border-radius: 0.4rem;
+  box-shadow: inset 0 0.2rem 0 rgba(255, 255, 255, 0.2), inset 0 -0.2rem 0 rgba(0, 0, 0, 0.05);
+}
+
+.loginLink:active {
+  box-shadow: 0 0 0.2rem rgba(0, 0, 0, 0.3);
+}

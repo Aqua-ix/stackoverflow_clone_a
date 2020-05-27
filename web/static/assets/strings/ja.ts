@@ -17,6 +17,10 @@ export default {
     title: '質問一覧',
     question: '質問する',
   },
+  sidebar:{
+    home: 'ホーム',
+    unsolved:'未解決',
+  },
   bookList: {
     title: '本一覧',
     create: '本を登録する',

@@ -1,7 +1,14 @@
 .main {
-  width: 80%;
+  width: 85%;
   margin: 3rem auto auto;
 }
+
+.container {
+  width: 100%;
+  display: -webkit-flex;
+  display: flex;
+}
+
 .taggroup {
   color: #ffffff;
 }
