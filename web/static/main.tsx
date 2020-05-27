@@ -24,7 +24,7 @@ ReactDOM.render(
       <Route path={paths.user()} component={UserDetailPage} />
       <Route path={paths.questionCreate} component={QuestionCreatePage} />
       <Route path={paths.question()} component={QuestionDetailPage} />
-      <Route path={paths.tag()} component={TagFilterPage} /> 
+      <Route path={paths.tag()} component={TagFilterPage} />
       <Route path={paths.bookCreate} component={BookCreatePage} />
       <Route path={paths.book()} component={BookDetailPage} />
       <Route path={paths.bookList} component={BookListPage} />

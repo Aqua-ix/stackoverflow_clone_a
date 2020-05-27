@@ -14,9 +14,8 @@ import { AnswerOverview } from '@/app/components/AnswerOverview'
 import { paths } from '@/app/common/paths'
 import { QUESTION_LIMIT } from '@/app/common/constants'
 import { retrieveQuestionsByUser, retrieveAnswers, logout } from '@/app/common/api'
-import { getCurrentUserId, } from '@/app/common/utils'
+import { getCurrentUserId } from '@/app/common/utils'
 import { SideBar } from '@/app/components/SideBar'
-
 
 interface RouteParams {
   userId: string
@@ -25,7 +24,7 @@ interface RouteParams {
 const UserDetailPage: FC = () => {
   const history = useHistory()
   const { userId } = useParams<RouteParams>()
-  
+
   const [questions, setQuestion] = useState<Question[]>([])
   const [answers, setAnswers] = useState<Answer[]>([])
   const currentUserId = getCurrentUserId()
@@ -35,10 +34,10 @@ const UserDetailPage: FC = () => {
   }
 
   useEffect(() => {
-    retrieveQuestionsByUser(userId).then(items =>{
+    retrieveQuestionsByUser(userId).then(items => {
       setQuestion(items)
     })
-    retrieveAnswers({ userId: userId }).then(items => {
+    retrieveAnswers({ userId }).then(items => {
       setAnswers(items)
     })
   }, [userId])
@@ -47,17 +46,17 @@ const UserDetailPage: FC = () => {
     <>
       <Header userId={currentUserId} handleLogin={handleLogin} handleLogout={logout} />
       <div className={style.container}>
-      <SideBar/>
+        <SideBar />
         <div className={style.main}>
           <div className={style.pageTitle}>{words.user.title}</div>
           <hr className={style.hr} />
           <div className={style.listTitle}>{words.user.questionList}</div>
-          {questions.slice(0,QUESTION_LIMIT).map((question: Question) => (
-            <QuestionItem key={`QuestionList_QuestionItem_${question.id}`} question={question}/>
+          {questions.slice(0, QUESTION_LIMIT).map((question: Question) => (
+            <QuestionItem key={`QuestionList_QuestionItem_${question.id}`} question={question} />
           ))}
           <div className={style.listTitle}>{words.user.answerList}</div>
-          {answers.slice(0,QUESTION_LIMIT).map((answer: Answer) => (
-            <AnswerOverview key={`AnswerOverview_${answer.id}`} answer={answer}/>
+          {answers.slice(0, QUESTION_LIMIT).map((answer: Answer) => (
+            <AnswerOverview key={`AnswerOverview_${answer.id}`} answer={answer} />
           ))}
         </div>
       </div>

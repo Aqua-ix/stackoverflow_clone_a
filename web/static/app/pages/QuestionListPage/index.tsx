@@ -11,6 +11,7 @@ import { QUESTION_LIMIT } from '@/app/common/constants'
 import { retrieveQuestionsByUser, logout } from '@/app/common/api'
 import { getCurrentUserId } from '@/app/common/utils'
 import { SideBar } from '@/app/components/SideBar'
+
 const QuestionListPage: FC = () => {
   const [questions, setQuestions] = useState<Question[]>([]) // このコンポーネントはstateとして質問一覧のデータを保持する。
   const history = useHistory()
@@ -32,8 +33,8 @@ const QuestionListPage: FC = () => {
     <>
       <Header userId={currentUserId} handleLogin={handleLogin} handleLogout={logout} />
       <div className={style.container}>
-      <SideBar/>
-        <div className={style.main}>  
+        <SideBar />
+        <div className={style.main}>
           <div className={style.pageTitle}>{words.top.title}</div>
           <Link to={`${paths.questionCreate}`}>{words.top.question}</Link>
           <hr className={style.hr} />
@@ -42,7 +43,6 @@ const QuestionListPage: FC = () => {
             <QuestionItem key={`QuestionList_QuestionItem_${question.id}`} question={question} isUserIdShow />
           ))}
         </div>
-        
       </div>
       <Footer />
     </>

@@ -17,7 +17,7 @@ export const QuestionPost: FC<Props> = ({ handleSubmit }: Props) => {
 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => dispatch(actions.setTitle(e.target.value))
   const handleBodyChange = (e: ChangeEvent<HTMLTextAreaElement>) => dispatch(actions.setBody(e.target.value))
-  const handleTagChange = (e: ChangeEvent<HTMLInputElement>) => dispatch(actions.setTags(e.target.value.split(",")))
+  const handleTagChange = (e: ChangeEvent<HTMLInputElement>) => dispatch(actions.setTags(e.target.value.split(',')))
 
   const handleClickSubmit = (e: FormEvent<HTMLFormElement>) => {
     handleSubmit(title, body, tags)
@@ -54,9 +54,11 @@ export const QuestionPost: FC<Props> = ({ handleSubmit }: Props) => {
               name="body"
               onChange={handleBodyChange}
             />
-            <div dangerouslySetInnerHTML={{
-            __html: marked(body)
-            }}></div>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: marked(body),
+              }}
+            />
             <br />
             <div className={style.label}>{words.questionCreate.tag}</div>
             <br />

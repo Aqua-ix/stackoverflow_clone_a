@@ -12,8 +12,7 @@ import { QuestionItem } from '@/app/components/QuestionItem'
 import { paths } from '@/app/common/paths'
 import { QUESTION_LIMIT } from '@/app/common/constants'
 import { retrieveQuestionsByTag, logout } from '@/app/common/api'
-import { getCurrentUserId, } from '@/app/common/utils'
-
+import { getCurrentUserId } from '@/app/common/utils'
 
 interface RouteParams {
   tag: string
@@ -22,7 +21,7 @@ interface RouteParams {
 const TagFilterPage: FC = () => {
   const history = useHistory()
   const { tag } = useParams<RouteParams>()
-  
+
   const [questions, setQuestion] = useState<Question[]>([])
   const CurrentUserId = getCurrentUserId()
 
@@ -31,7 +30,7 @@ const TagFilterPage: FC = () => {
   }
 
   useEffect(() => {
-    retrieveQuestionsByTag(tag).then(items =>{
+    retrieveQuestionsByTag(tag).then(items => {
       setQuestion(items)
     })
   }, [tag])
@@ -43,8 +42,8 @@ const TagFilterPage: FC = () => {
       <div className={style.main}>
         <div className={style.pageTitle}>{`[${tag}]${words.tag.description}`}</div>
         <hr className={style.hr} />
-        {questions.slice(0,QUESTION_LIMIT).map((question: Question) => (
-          <QuestionItem key={`QuestionList_QuestionItem_${question.id}`} question={question} isUserIdShow/>
+        {questions.slice(0, QUESTION_LIMIT).map((question: Question) => (
+          <QuestionItem key={`QuestionList_QuestionItem_${question.id}`} question={question} isUserIdShow />
         ))}
       </div>
 

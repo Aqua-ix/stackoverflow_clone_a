@@ -33,7 +33,7 @@ export const reducer = (state: State, action: ActionType): State => {
 
     case Type.SET_BODY:
       return { ...state, body: action.payload }
-  
+
     case Type.SET_TAGS:
       return { ...state, tags: action.payload }
 

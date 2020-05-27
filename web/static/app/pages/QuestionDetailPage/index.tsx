@@ -106,29 +106,29 @@ const QuestionDetailPage: FC = () => {
     <>
       <Header userId={currentUserId} handleLogin={handleLogin} handleLogout={logout} />
       <div className={style.container}>
-      <SideBar/>
-      <div className={style.main}>
-        {question && (
-          <Question
+        <SideBar />
+        <div className={style.main}>
+          {question && (
+            <Question
+              userId={currentUserId}
+              questionId={id}
+              question={question}
+              updateQuestion={handleUpdateQuestion}
+              createQuestionComment={handleCreateQuestionComment}
+              updateQuestionComment={handleUpdateQuestionComment}
+              createVote={handleCreateVote}
+            />
+          )}
+          <AnswerList
             userId={currentUserId}
             questionId={id}
-            question={question}
-            updateQuestion={handleUpdateQuestion}
-            createQuestionComment={handleCreateQuestionComment}
-            updateQuestionComment={handleUpdateQuestionComment}
-            createVote={handleCreateVote}
+            answers={answers}
+            createAnswerComment={handleCreateAnswerComment}
+            updateAnswerComment={handleUpdateAnswerComment}
+            updateAnswer={handleUpdateAnswer}
           />
-        )}
-        <AnswerList
-          userId={currentUserId}
-          questionId={id}
-          answers={answers}
-          createAnswerComment={handleCreateAnswerComment}
-          updateAnswerComment={handleUpdateAnswerComment}
-          updateAnswer={handleUpdateAnswer}
-        />
-        <AnswerPost userId={currentUserId} postAnswer={handlePostAnswer} />
-      </div>
+          <AnswerPost userId={currentUserId} postAnswer={handlePostAnswer} />
+        </div>
       </div>
     </>
   )

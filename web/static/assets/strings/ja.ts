@@ -17,9 +17,9 @@ export default {
     title: '質問一覧',
     question: '質問する',
   },
-  sidebar:{
+  sidebar: {
     home: 'ホーム',
-    unsolved:'未解決',
+    unsolved: '未解決',
   },
   bookList: {
     title: '本一覧',
@@ -70,6 +70,6 @@ export default {
     time: '質問日時',
   },
   tag: {
-    description: 'のタグがついた質問一覧'
-  }
+    description: 'のタグがついた質問一覧',
+  },
 } as const

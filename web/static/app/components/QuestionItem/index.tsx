@@ -11,20 +11,22 @@ interface Props {
 }
 
 const getTermString = (date: string) => {
-  const templateString: string = '質問日時: '
+  const templateString = '質問日時: '
   const nowTime = Date.now()
   const res = new Date(nowTime - Date.parse(date) - 9 * 60 * 60 * 1000)
   if (res.getFullYear() - 1970 !== 0) {
-    return templateString + (res.getFullYear() - 1970) + '年前 '
-  } else if (res.getMonth() !== 0) {
-    return templateString + res.getMonth() + 'ヶ月前 '
-  } else if (res.getDate() - 1 !== 0) {
-    return templateString + res.getDate() + '日前 '
-  } else if (res.getHours() !== 0) {
-    return templateString + res.getHours() + '時間前 '
-  } else {
-    return templateString + res.getMinutes() + '分前 '
+    return `${templateString + (res.getFullYear() - 1970)}年前 `
   }
+  if (res.getMonth() !== 0) {
+    return `${templateString + res.getMonth()}ヶ月前 `
+  }
+  if (res.getDate() - 1 !== 0) {
+    return `${templateString + res.getDate()}日前 `
+  }
+  if (res.getHours() !== 0) {
+    return `${templateString + res.getHours()}時間前 `
+  }
+  return `${templateString + res.getMinutes()}分前 `
 }
 
 const getDisplayName = (userId: string) => {
@@ -43,23 +45,23 @@ export const QuestionItem: FC<Props> = ({ question, isUserIdShow }: Props) => (
     <h5 className={style.title}>
       <Link to={paths.question(question.id)}>{question.title}</Link>
     </h5>
-    <div className={style.bodytext}>
-      　{question.body}
-    </div>
+    <div className={style.bodytext}>{question.body}</div>
     <div className={style.taggroup}>
-      {question.tags[0] ? question.tags.map((tag:string) =>
-        <span>
-          <Link to={paths.tag(tag)}>
-            <button　className={style.button}>
-                {tag}
-            </button>
-          </Link>
-        </span>
-      ): null}
+      {question.tags[0]
+        ? question.tags.map((tag: string) => (
+            <span>
+              <Link to={paths.tag(tag)}>
+                <button type="button" className={style.button}>
+                  {tag}
+                </button>
+              </Link>
+            </span>
+          ))
+        : null}
     </div>
 
     <div className={style.additional}>
-      {getTermString(question.createdAt) + ' '}
+      {`${getTermString(question.createdAt)} `}
       {isUserIdShow && (
         <>
           {words.common.by}

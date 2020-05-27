@@ -17,7 +17,7 @@ interface QuestionEditFormProps {
   question: QuestionModels
   children: ReactNode
   endQuestionEdit: () => void
-  updateQuestion: (title: string, body: string, tags:string[]) => void
+  updateQuestion: (title: string, body: string, tags: string[]) => void
 }
 
 const QuestionEditForm: FC<QuestionEditFormProps> = ({
@@ -35,7 +35,7 @@ const QuestionEditForm: FC<QuestionEditFormProps> = ({
 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => dispatch(actions.setTitle(e.target.value))
   const handleBodyChange = (e: ChangeEvent<HTMLTextAreaElement>) => dispatch(actions.setBody(e.target.value))
-  const handleTagChange = (e: ChangeEvent<HTMLInputElement>) => dispatch(actions.setTags(e.target.value.split(",")))
+  const handleTagChange = (e: ChangeEvent<HTMLInputElement>) => dispatch(actions.setTags(e.target.value.split(',')))
   const handleSaveClick = () => {
     updateQuestion(title, body, tags)
     endQuestionEdit()
@@ -104,10 +104,16 @@ const QuestionView: FC<QuestionViewProps> = ({ children, question, isMyQuestion,
   <>
     <div className={style.pageTitle}>{question.title}</div>
     <div className={style.taggroup}>
-      {question.tags[0] ? question.tags.map((tag:string) =>
-        <span> <button 
-        className={style.button}>{tag}</button> </span>
-      ): null}
+      {question.tags[0]
+        ? question.tags.map((tag: string) => (
+            <span>
+              {' '}
+              <button type="button" className={style.button}>
+                {tag}
+              </button>{' '}
+            </span>
+          ))
+        : null}
     </div>
     <hr className={style.hr} />
     <div className={style.mainArea}>
@@ -173,10 +179,10 @@ export const Question: FC<QuestionProps> = ({
   const updateComment = (commentId: string) => (body: string) => updateQuestionComment(body, questionId, commentId)
   const createComment = (body: string) => createQuestionComment(body, questionId)
 
-  const updateQuestionBody = useCallback((title: string, body: string, tags:string[]) => updateQuestion(title, body, questionId, tags), [
-    questionId,
-    updateQuestion,
-  ])
+  const updateQuestionBody = useCallback(
+    (title: string, body: string, tags: string[]) => updateQuestion(title, body, questionId, tags),
+    [questionId, updateQuestion]
+  )
 
   const beginQuestionEdit = useCallback(() => setIsEditQuestion(true), [])
   const endQuestionEdit = useCallback(() => setIsEditQuestion(false), [])
