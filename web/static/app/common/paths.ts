@@ -4,6 +4,7 @@ export const paths = {
   user: (userId = ':userId') => `/user/${userId}`,
   question: (id = ':id') => `/question/${id}`,
   questionCreate: '/question/create',
+  tag: (tag = ':tag') => `/tag/${tag}`,
   bookList: '/book',
   book: (id = ':id') => `/book/${id}`,
   bookCreate: '/book/create',

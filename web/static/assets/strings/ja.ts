@@ -65,4 +65,7 @@ export default {
     post: '投稿',
     time: '質問日時',
   },
+  tag: {
+    description: 'のタグがついた質問一覧'
+  }
 } as const

@@ -13,8 +13,7 @@ import { QuestionItem } from '@/app/components/QuestionItem'
 import { AnswerOverview } from '@/app/components/AnswerOverview'
 import { paths } from '@/app/common/paths'
 import { QUESTION_LIMIT } from '@/app/common/constants'
-//import { logout } from '@/app/common/api'
-import { retrieveQuestions, retrieveAnswers, logout } from '@/app/common/api'
+import { retrieveQuestionsByUser, retrieveAnswers, logout } from '@/app/common/api'
 import { getCurrentUserId, } from '@/app/common/utils'
 
 
@@ -24,13 +23,7 @@ interface RouteParams {
 
 const UserDetailPage: FC = () => {
   const history = useHistory()
-  const { userId } = useParams<RouteParams>() // このuserIdをリクエストに利用する。
-  console.log(userId)
-
-
-  // useEffect(), useState(), retrieveQuestions(), retrieveAnswers()を組み合わせて、特定のユーザーの質問と回答を取得する。
-  // - retrieveQuestions(userId)で指定したユーザーの質問を取得できる。
-  // - retrieveAnswers({userId})で指定したユーザーの回答を取得できる。
+  const { userId } = useParams<RouteParams>()
   
   const [questions, setQuestion] = useState<Question[]>([])
   const [answers, setAnswers] = useState<Answer[]>([])
@@ -41,7 +34,7 @@ const UserDetailPage: FC = () => {
   }
 
   useEffect(() => {
-    retrieveQuestions(userId).then(items =>{
+    retrieveQuestionsByUser(userId).then(items =>{
       setQuestion(items)
     })
     retrieveAnswers({ userId: userId }).then(items => {

@@ -105,7 +105,8 @@ const QuestionView: FC<QuestionViewProps> = ({ children, question, isMyQuestion,
     <div className={style.pageTitle}>{question.title}</div>
     <div className={style.taggroup}>
       {question.tags[0] ? question.tags.map((tag:string) =>
-        <span> <button　className={style.button}>{tag}</button> </span>
+        <span> <button 
+        className={style.button}>{tag}</button> </span>
       ): null}
     </div>
     <hr className={style.hr} />

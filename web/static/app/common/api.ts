@@ -27,8 +27,11 @@ export const updateBook = (id: string, title: string, author: string): Promise<B
     {}
   ).then(({ data }) => data)
 
-export const retrieveQuestions = (userId?: string): Promise<Question[]> =>
+export const retrieveQuestionsByUser = (userId?: string): Promise<Question[]> =>
   HttpClient.get('/v1/question', { params: { userId } }).then(({ data }) => data)
+
+  export const retrieveQuestionsByTag = (tags?: string): Promise<Question[]> =>
+  HttpClient.get('/v1/question', { params: { tags } }).then(({ data }) => data)
 
 export const retrieveQuestion = (id: string): Promise<Question> =>
   HttpClient.get(`v1/question/${id}`, {}).then(({ data }) => data)

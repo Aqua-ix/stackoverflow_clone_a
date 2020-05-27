@@ -13,9 +13,7 @@ interface Props {
 const getTermString = (date: string) => {
   const templateString: string = '質問日時: '
   const nowTime = Date.now()
-  console.log(Date.now())
   const res = new Date(nowTime - Date.parse(date) - 9 * 60 * 60 * 1000)
-  console.log(res)
   if (res.getFullYear() - 1970 !== 0) {
     return templateString + (res.getFullYear() - 1970) + '年前 '
   } else if (res.getMonth() !== 0) {
@@ -48,7 +46,13 @@ export const QuestionItem: FC<Props> = ({ question, isUserIdShow }: Props) => (
 
     <div className={style.taggroup}>
       {question.tags[0] ? question.tags.map((tag:string) =>
-        <span> <button　className={style.button}>{tag}</button> </span>
+        <span>
+          <Link to={paths.tag(tag)}>
+            <button　className={style.button}>
+                {tag}
+            </button>
+          </Link>
+        </span>
       ): null}
     </div>
 
