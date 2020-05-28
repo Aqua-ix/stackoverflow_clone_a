@@ -50,11 +50,11 @@ const UserListPage: FC = () => {
             <div className={style.pageTitle}>{words.top.users}</div>
             <hr className={style.hr} />
             <ul>
-            <li className={style.sidebar_list}>
+            <li>
               <FontAwesomeIcon className={style.icon} icon={faUser} />
               <Link to={paths.user(userIdList.user1)}>ユーザー1</Link>
             </li>
-            <li className={style.sidebar_list}>
+            <li>
               <FontAwesomeIcon className={style.icon} icon={faUser} />
               <Link to={paths.user(userIdList.user2)}>ユーザー2</Link>
             </li>
