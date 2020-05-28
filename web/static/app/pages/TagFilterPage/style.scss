@@ -5,6 +5,12 @@
   margin: 3rem auto auto;
 }
 
+.container {
+  width: 100%;
+  display: -webkit-flex;
+  display: flex;
+}
+
 .listTitle {
   margin-bottom: 0.8rem;
   font-size: 2rem;

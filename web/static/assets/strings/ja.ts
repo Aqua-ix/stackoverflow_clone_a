@@ -16,10 +16,13 @@ export default {
   top: {
     title: '質問一覧',
     question: '質問する',
+    users: 'ユーザー一覧',
   },
   sidebar: {
     home: 'ホーム',
     unsolved: '未解決',
+    tags: 'タグ一覧',
+    users: 'ユーザー',
   },
   bookList: {
     title: '本一覧',

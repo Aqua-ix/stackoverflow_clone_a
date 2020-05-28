@@ -12,15 +12,18 @@ import TagFilterPage from '@/app/pages/TagFilterPage'
 import BookListPage from '@/app/pages/BookListPage'
 import BookDetailPage from '@/app/pages/BookDetailPage'
 import BookCreatePage from '@/app/pages/BookCreatePage'
+import UserListPage from '@/app/pages/UserListPage'
 
 import { paths } from '@/app/common/paths'
 import '@/assets/css/reboot.css'
 import '@/assets/css/common.scss'
 
+
 ReactDOM.render(
   <HashRouter>
     <Switch>
       <Route path={paths.login} component={LoginPage} />
+      <Route path={paths.userList} component={UserListPage}/>
       <Route path={paths.user()} component={UserDetailPage} />
       <Route path={paths.questionCreate} component={QuestionCreatePage} />
       <Route path={paths.question()} component={QuestionDetailPage} />

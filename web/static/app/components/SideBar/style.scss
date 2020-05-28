@@ -23,6 +23,20 @@
   padding-bottom: 0.5rem;
 }
 
+
+.checkbox{
+  display: none;
+}
+
+.open {
+  max-height: 0;
+  overflow: hidden;
+  background-color: red;
+}
+.openlist {
+  list-style-type: none;
+}
+
 .icon {
   margin-right: 1.2rem;
   font-size: 2.2rem;
@@ -94,4 +108,8 @@
 
 .loginLink:active {
   box-shadow: 0 0 0.2rem rgba(0, 0, 0, 0.3);
+}
+
+ul {
+  padding-left: 0px;
 }
