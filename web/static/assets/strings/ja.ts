@@ -1,7 +1,7 @@
 export default {
   common: {
     additional: (additional: string) => `Posted at ${additional}  `,
-    by: 'by ',
+    by: '投稿者: ',
     hyphen: '-- ',
     save: '保存',
     update: '更新',
@@ -26,7 +26,7 @@ export default {
     create: '本を登録する',
   },
   user: {
-    title: 'ユーザー詳細',
+    title: (user:string) => `${user}の投稿一覧`,
     questionList: '質問一覧',
     answerList: '回答一覧',
   },
@@ -70,6 +70,6 @@ export default {
     time: '質問日時',
   },
   tag: {
-    description: 'のタグがついた質問一覧',
+    description: (tag:string) => `[${tag}]タグが付いた質問`,
   },
 } as const

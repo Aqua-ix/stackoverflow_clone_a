@@ -14,7 +14,7 @@ import { AnswerOverview } from '@/app/components/AnswerOverview'
 import { paths } from '@/app/common/paths'
 import { QUESTION_LIMIT } from '@/app/common/constants'
 import { retrieveQuestionsByUser, retrieveAnswers, logout } from '@/app/common/api'
-import { getCurrentUserId } from '@/app/common/utils'
+import { getCurrentUserId, getUserName } from '@/app/common/utils'
 import { SideBar } from '@/app/components/SideBar'
 
 interface RouteParams {
@@ -48,7 +48,7 @@ const UserDetailPage: FC = () => {
       <div className={style.container}>
         <SideBar />
         <div className={style.main}>
-          <div className={style.pageTitle}>{words.user.title}</div>
+          <div className={style.pageTitle}>{`${words.user.title(getUserName(currentUserId))}`}</div>
           <hr className={style.hr} />
           <div className={style.listTitle}>{words.user.questionList}</div>
           {questions.slice(0, QUESTION_LIMIT).map((question: Question) => (

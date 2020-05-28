@@ -5,6 +5,7 @@ import style from '@/app/components/CommentItem/style.scss'
 import { Comment } from '@/app/models/Comment'
 import words from '@/assets/strings'
 import { paths } from '@/app/common/paths'
+import { getTimeString, getUserName } from '@/app/common/utils'
 import { BODY_MAX_LENGTH, INPUT_MIN_LENGTH } from '@/app/common/constants'
 
 interface CommentEditFormProps {
@@ -56,8 +57,8 @@ const CommentItemView: FC<CommentItemViewProps> = ({ comment, isMyComment, begin
   <>
     <span className={style.body}>{`${comment.body} `}</span>
     <span className={style.additional}>
-      {`${words.common.hyphen} ${words.common.additional(comment.createdAt)} ${words.common.by}`}
-      <Link to={paths.user(comment.userId)}>{comment.userId}</Link>
+      {`${words.common.hyphen} ${getTimeString(comment.createdAt)} ${words.common.by}`}
+      <Link to={paths.user(comment.userId)}>{getUserName(comment.userId)}</Link>
       {isMyComment && (
         <span>
           <button type="button" className={style.buttonUpdate} onClick={beginCommentEdit}>

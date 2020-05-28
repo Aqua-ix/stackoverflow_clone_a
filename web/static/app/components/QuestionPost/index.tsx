@@ -3,9 +3,11 @@ import clsx from 'clsx'
 import { initialState, reducer, actions } from '@/app/components/QuestionPost/reducer'
 import style from '@/app/components/QuestionPost/style.scss'
 import words from '@/assets/strings'
-import { TITLE_MAX_LENGTH, TAG_MAX_LENGTH, BODY_MAX_LENGTH, INPUT_MIN_LENGTH } from '@/app/common/constants'
+import { TITLE_MAX_LENGTH, BODY_MAX_LENGTH, INPUT_MIN_LENGTH } from '@/app/common/constants'
 import { getCurrentUserId } from '@/app/common/utils'
 import marked from 'marked'
+import TagsInput from 'react-tagsinput'
+import 'react-tagsinput/react-tagsinput.css'
 
 interface Props {
   readonly handleSubmit: (title: string, body: string, tags: string[]) => void
@@ -17,7 +19,11 @@ export const QuestionPost: FC<Props> = ({ handleSubmit }: Props) => {
 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => dispatch(actions.setTitle(e.target.value))
   const handleBodyChange = (e: ChangeEvent<HTMLTextAreaElement>) => dispatch(actions.setBody(e.target.value))
-  const handleTagChange = (e: ChangeEvent<HTMLInputElement>) => dispatch(actions.setTags(e.target.value.split(',')))
+  // const handleTagChange = (e: ChangeEvent<HTMLInputElement>) => dispatch(actions.setTags(e.target.value))
+
+  const handleTagChange = (tags: string[]) => {
+    dispatch(actions.setTags(tags))
+  }
 
   const handleClickSubmit = (e: FormEvent<HTMLFormElement>) => {
     handleSubmit(title, body, tags)
@@ -62,13 +68,10 @@ export const QuestionPost: FC<Props> = ({ handleSubmit }: Props) => {
             <br />
             <div className={style.label}>{words.questionCreate.tag}</div>
             <br />
-            <input
-              maxLength={TAG_MAX_LENGTH}
-              minLength={INPUT_MIN_LENGTH}
-              className={clsx(style.tagEdit, style.formControl)}
-              type="text"
-              name="tags"
+            <TagsInput
+              value={tags}
               onChange={handleTagChange}
+              onlyUnique
             />
             <br />
             <div className={style.formGroup}>

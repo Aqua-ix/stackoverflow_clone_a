@@ -9,6 +9,7 @@ import { Comment } from '@/app/models/Comment'
 import { VoteType } from '@/app/models/Vote'
 import words from '@/assets/strings'
 import { paths } from '@/app/common/paths'
+import { getTimeString, getUserName } from '@/app/common/utils'
 import { CommentItem } from '@/app/components/CommentItem'
 import { CommentPost } from '@/app/components/CommentPost'
 import { INPUT_MIN_LENGTH, BODY_MAX_LENGTH } from '@/app/common/constants'
@@ -40,7 +41,7 @@ const QuestionEditForm: FC<QuestionEditFormProps> = ({
     updateQuestion(title, body, tags)
     endQuestionEdit()
   }
-
+  
   return (
     <>
       {!title && <div className={style.errorEmpty}>{words.common.textErrorEmpty}</div>}
@@ -108,9 +109,12 @@ const QuestionView: FC<QuestionViewProps> = ({ children, question, isMyQuestion,
         ? question.tags.map((tag: string) => (
             <span>
               {' '}
-              <button type="button" className={style.button}>
-                {tag}
-              </button>{' '}
+              <Link to={paths.tag(tag)}>
+                <button type="button" className={style.button}>
+                  {tag}
+                </button>
+              </Link>
+              {' '}
             </span>
           ))
         : null}
@@ -121,8 +125,8 @@ const QuestionView: FC<QuestionViewProps> = ({ children, question, isMyQuestion,
       <div className={style.contentArea}>
         <div className={style.body}>{question.body}</div>
         <div className={style.additional}>
-          {`${words.common.additional(question.createdAt)} ${words.common.by}`}
-          <Link to={paths.user(question.userId)}>{question.userId}</Link>
+          {`${getTimeString(question.createdAt)} ${words.common.by}`}
+          <Link to={paths.user(question.userId)}>{getUserName(question.userId)}</Link>
           {isMyQuestion && (
             <span>
               <button type="button" className={style.buttonUpdate} onClick={beginQuestionEdit}>

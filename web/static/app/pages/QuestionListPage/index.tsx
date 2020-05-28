@@ -20,7 +20,6 @@ const QuestionListPage: FC = () => {
   // https://reactjs.org/docs/hooks-reference.html#useeffect
   useEffect(() => {
     retrieveQuestionsByUser().then(items => {
-      // よくわからない空白を追加する
       // GearのAPIから質問一覧を取得する。非同期で取得をするためにPromise()を利用する。
       setQuestions(items) // 取得した質問をこのコンポーネントのstateに保存する。stateを変更することで、コンポーネントの関数が再度実行される。
     })

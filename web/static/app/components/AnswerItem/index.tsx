@@ -6,7 +6,7 @@ import { Answer } from '@/app/models/Answer'
 import words from '@/assets/strings'
 import { paths } from '@/app/common/paths'
 import { BODY_MAX_LENGTH, INPUT_MIN_LENGTH } from '@/app/common/constants'
-import { getCurrentUserId } from '@/app/common/utils'
+import { getCurrentUserId, getTimeString, getUserName } from '@/app/common/utils'
 
 interface AnswerEditFormProps {
   readonly initialBody: string
@@ -57,8 +57,8 @@ const AnswerItemView: FC<AnswerItemViewProps> = ({ answer, isMyAnswer, beginAnsw
   <>
     <div className={style.body}>{answer.body}</div>
     <div className={style.additional}>
-      {`${words.common.additional(answer.createdAt)} ${words.common.by}`}
-      <Link to={paths.user(answer.userId)}>{answer.userId}</Link>
+      {`${getTimeString(answer.createdAt)} ${words.common.by}`}
+      <Link to={paths.user(answer.userId)}>{getUserName(answer.userId)}</Link>
       {isMyAnswer && (
         <span>
           <button type="button" className={style.buttonUpdate} onClick={beginAnswerEdit}>

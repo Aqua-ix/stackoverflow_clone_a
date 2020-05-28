@@ -40,7 +40,7 @@ const TagFilterPage: FC = () => {
       <Header userId={CurrentUserId} handleLogin={handleLogin} handleLogout={logout} />
 
       <div className={style.main}>
-        <div className={style.pageTitle}>{`[${tag}]${words.tag.description}`}</div>
+        <div className={style.pageTitle}>{words.tag.description(tag)}</div>
         <hr className={style.hr} />
         {questions.slice(0, QUESTION_LIMIT).map((question: Question) => (
           <QuestionItem key={`QuestionList_QuestionItem_${question.id}`} question={question} isUserIdShow />
