@@ -29,7 +29,7 @@ export default {
     create: '本を登録する',
   },
   user: {
-    title: (user:string) => `${user}の投稿一覧`,
+    title: (user: string) => `${user}の投稿一覧`,
     questionList: '質問一覧',
     answerList: '回答一覧',
   },
@@ -73,6 +73,6 @@ export default {
     time: '質問日時',
   },
   tag: {
-    description: (tag:string) => `[${tag}]タグが付いた質問`,
+    description: (tag: string) => `[${tag}]タグが付いた質問`,
   },
 } as const

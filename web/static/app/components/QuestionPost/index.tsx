@@ -68,11 +68,7 @@ export const QuestionPost: FC<Props> = ({ handleSubmit }: Props) => {
             <br />
             <div className={style.label}>{words.questionCreate.tag}</div>
             <br />
-            <TagsInput
-              value={tags}
-              onChange={handleTagChange}
-              onlyUnique
-            />
+            <TagsInput value={tags} onChange={handleTagChange} onlyUnique />
             <br />
             <div className={style.formGroup}>
               <button type="submit" className={style.buttonPost}>

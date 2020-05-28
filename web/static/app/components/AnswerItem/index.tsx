@@ -56,9 +56,12 @@ interface AnswerItemViewProps {
 
 const AnswerItemView: FC<AnswerItemViewProps> = ({ answer, isMyAnswer, beginAnswerEdit }: AnswerItemViewProps) => (
   <>
-    <div className={style.body} dangerouslySetInnerHTML={{
+    <div
+      className={style.body}
+      dangerouslySetInnerHTML={{
         __html: marked(answer.body),
-    }}/>
+      }}
+    />
     <div className={style.additional}>
       {`${getTimeString(answer.createdAt)} ${words.common.by}`}
       <Link to={paths.user(answer.userId)}>{getUserName(answer.userId)}</Link>

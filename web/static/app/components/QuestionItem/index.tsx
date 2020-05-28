@@ -26,8 +26,7 @@ export const QuestionItem: FC<Props> = ({ question, isUserIdShow }: Props) => (
                 <button type="button" className={style.button}>
                   {tag}
                 </button>
-              </Link>
-              {' '}
+              </Link>{' '}
             </span>
           ))
         : null}

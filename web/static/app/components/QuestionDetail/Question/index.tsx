@@ -42,7 +42,7 @@ const QuestionEditForm: FC<QuestionEditFormProps> = ({
     updateQuestion(title, body, tags)
     endQuestionEdit()
   }
-  
+
   return (
     <>
       {!title && <div className={style.errorEmpty}>{words.common.textErrorEmpty}</div>}
@@ -114,8 +114,7 @@ const QuestionView: FC<QuestionViewProps> = ({ children, question, isMyQuestion,
                 <button type="button" className={style.button}>
                   {tag}
                 </button>
-              </Link>
-              {' '}
+              </Link>{' '}
             </span>
           ))
         : null}
@@ -124,9 +123,12 @@ const QuestionView: FC<QuestionViewProps> = ({ children, question, isMyQuestion,
     <div className={style.mainArea}>
       {children}
       <div className={style.contentArea}>
-        <div className={style.body} dangerouslySetInnerHTML={{
-          __html: marked(question.body),
-        }}/>
+        <div
+          className={style.body}
+          dangerouslySetInnerHTML={{
+            __html: marked(question.body),
+          }}
+        />
         <div className={style.additional}>
           {`${getTimeString(question.createdAt)} ${words.common.by}`}
           <Link to={paths.user(question.userId)}>{getUserName(question.userId)}</Link>

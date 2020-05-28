@@ -6,7 +6,6 @@ import words from '@/assets/strings'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHome, faUser } from '@fortawesome/free-solid-svg-icons'
 
-
 interface LoginInfo {
   readonly userId: string
   readonly handleLogin: () => void
@@ -15,7 +14,7 @@ interface LoginInfo {
 
 type Props = LoginInfo | {}
 
-export const SideBar: FC<Props> = (props: Props) => (
+export const SideBar: FC<Props> = () => (
   <div className={style.sidebar}>
     <div className={style.sidebar_item_fixed}>
       <ul>

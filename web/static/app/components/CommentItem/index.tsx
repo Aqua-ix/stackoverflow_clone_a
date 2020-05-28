@@ -57,9 +57,11 @@ interface CommentItemViewProps {
 const CommentItemView: FC<CommentItemViewProps> = ({ comment, isMyComment, beginCommentEdit }: CommentItemViewProps) => (
   <>
     <span className={style.body}>
-      <div dangerouslySetInnerHTML={{
-        __html: marked(comment.body),
-      }}/>
+      <div
+        dangerouslySetInnerHTML={{
+          __html: marked(comment.body),
+        }}
+      />
     </span>
     <span className={style.additional}>
       {`${words.common.hyphen} ${getTimeString(comment.createdAt)} ${words.common.by}`}
