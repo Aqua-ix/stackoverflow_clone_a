@@ -13,6 +13,7 @@ import { getTimeString, getUserName } from '@/app/common/utils'
 import { CommentItem } from '@/app/components/CommentItem'
 import { CommentPost } from '@/app/components/CommentPost'
 import { INPUT_MIN_LENGTH, BODY_MAX_LENGTH } from '@/app/common/constants'
+import marked from 'marked'
 
 interface QuestionEditFormProps {
   question: QuestionModels
@@ -123,7 +124,9 @@ const QuestionView: FC<QuestionViewProps> = ({ children, question, isMyQuestion,
     <div className={style.mainArea}>
       {children}
       <div className={style.contentArea}>
-        <div className={style.body}>{question.body}</div>
+        <div className={style.body} dangerouslySetInnerHTML={{
+          __html: marked(question.body),
+        }}/>
         <div className={style.additional}>
           {`${getTimeString(question.createdAt)} ${words.common.by}`}
           <Link to={paths.user(question.userId)}>{getUserName(question.userId)}</Link>

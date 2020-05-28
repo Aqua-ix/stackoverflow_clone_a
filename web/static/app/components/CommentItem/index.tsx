@@ -7,6 +7,7 @@ import words from '@/assets/strings'
 import { paths } from '@/app/common/paths'
 import { getTimeString, getUserName } from '@/app/common/utils'
 import { BODY_MAX_LENGTH, INPUT_MIN_LENGTH } from '@/app/common/constants'
+import marked from 'marked'
 
 interface CommentEditFormProps {
   readonly initialBody: string
@@ -55,7 +56,11 @@ interface CommentItemViewProps {
 
 const CommentItemView: FC<CommentItemViewProps> = ({ comment, isMyComment, beginCommentEdit }: CommentItemViewProps) => (
   <>
-    <span className={style.body}>{`${comment.body} `}</span>
+    <span className={style.body}>
+      <div dangerouslySetInnerHTML={{
+        __html: marked(comment.body),
+      }}/>
+    </span>
     <span className={style.additional}>
       {`${words.common.hyphen} ${getTimeString(comment.createdAt)} ${words.common.by}`}
       <Link to={paths.user(comment.userId)}>{getUserName(comment.userId)}</Link>

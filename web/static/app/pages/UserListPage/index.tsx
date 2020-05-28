@@ -9,6 +9,9 @@ import words from '@/assets/strings'
 import style from '@/app/pages/QuestionListPage/style.scss'
 import { retrieveQuestionsByUser, logout } from '@/app/common/api'
 import { getCurrentUserId } from '@/app/common/utils'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUser } from '@fortawesome/free-solid-svg-icons'
+import { Link } from 'react-router-dom'
 
 interface RouteParams {
   userId: string
@@ -32,6 +35,11 @@ const UserListPage: FC = () => {
   const handleLogin = () => {
     history.push(paths.login)
   }
+
+  const userIdList = {
+    user1: "5ea7da5fefbd276f270f93e6",
+    user2: "5ea7da5f83bdd64c5754b97f"
+  }
   
   return(
     <>
@@ -41,6 +49,16 @@ const UserListPage: FC = () => {
           <div className={style.main}>
             <div className={style.pageTitle}>{words.top.users}</div>
             <hr className={style.hr} />
+            <ul>
+            <li className={style.sidebar_list}>
+              <FontAwesomeIcon className={style.icon} icon={faUser} />
+              <Link to={paths.user(userIdList.user1)}>ユーザー1</Link>
+            </li>
+            <li className={style.sidebar_list}>
+              <FontAwesomeIcon className={style.icon} icon={faUser} />
+              <Link to={paths.user(userIdList.user2)}>ユーザー2</Link>
+            </li>
+          </ul>
           </div>
         </div>
       <Footer />

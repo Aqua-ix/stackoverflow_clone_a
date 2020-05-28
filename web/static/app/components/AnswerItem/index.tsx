@@ -7,6 +7,7 @@ import words from '@/assets/strings'
 import { paths } from '@/app/common/paths'
 import { BODY_MAX_LENGTH, INPUT_MIN_LENGTH } from '@/app/common/constants'
 import { getCurrentUserId, getTimeString, getUserName } from '@/app/common/utils'
+import marked from 'marked'
 
 interface AnswerEditFormProps {
   readonly initialBody: string
@@ -55,7 +56,9 @@ interface AnswerItemViewProps {
 
 const AnswerItemView: FC<AnswerItemViewProps> = ({ answer, isMyAnswer, beginAnswerEdit }: AnswerItemViewProps) => (
   <>
-    <div className={style.body}>{answer.body}</div>
+    <div className={style.body} dangerouslySetInnerHTML={{
+        __html: marked(answer.body),
+    }}/>
     <div className={style.additional}>
       {`${getTimeString(answer.createdAt)} ${words.common.by}`}
       <Link to={paths.user(answer.userId)}>{getUserName(answer.userId)}</Link>
