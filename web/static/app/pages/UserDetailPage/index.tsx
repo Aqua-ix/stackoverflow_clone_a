@@ -48,7 +48,7 @@ const UserDetailPage: FC = () => {
       <div className={style.container}>
         <SideBar />
         <div className={style.main}>
-          <div className={style.pageTitle}>{`${words.user.title(getUserName(currentUserId))}`}</div>
+          <div className={style.pageTitle}>{`${words.user.title(getUserName(userId))}`}</div>
           <hr className={style.hr} />
           <div className={style.listTitle}>{words.user.questionList}</div>
           {questions.slice(0, QUESTION_LIMIT).map((question: Question) => (

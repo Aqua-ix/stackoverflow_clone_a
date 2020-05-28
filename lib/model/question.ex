@@ -4,7 +4,7 @@ defmodule StackoverflowCloneA.Model.Question do
     use Croma.SubtypeOfString, pattern: ~R/\A.{1,100}\z/u
   end
   defmodule Body do
-    use Croma.SubtypeOfString, pattern: ~R/\A.{1,3000}\z/u
+    use Croma.SubtypeOfString, pattern: ~R/\A[\s\S]{1,3000}\z/u
   end
   defmodule VoterIdList do
     use Croma.SubtypeOfList, elem_module: StackoverflowCloneA.DodaiId

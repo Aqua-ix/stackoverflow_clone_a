@@ -2,7 +2,7 @@ use Croma
 
 defmodule StackoverflowCloneA.Model.Answer do
   defmodule Body do
-    use Croma.SubtypeOfString, pattern: ~R/\A.{1,3000}\z/u
+    use Croma.SubtypeOfString, pattern: ~R/\A[\s\S]{1,3000}\z/u
   end
   defmodule Comment do
     use Croma.Struct, recursive_new?: true, fields: [

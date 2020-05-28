@@ -37,8 +37,8 @@ const UserListPage: FC = () => {
   }
 
   const userIdList = {
-    user1: "5ea7da5fefbd276f270f93e6",
-    user2: "5ea7da5f83bdd64c5754b97f"
+    user1: "5ea7da5f83bdd64c5754b97f",
+    user2: "5ea7da5fefbd276f270f93e6",
   }
   
   return(
