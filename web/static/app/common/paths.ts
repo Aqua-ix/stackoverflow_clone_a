@@ -1,7 +1,7 @@
 export const paths = {
   root: '/',
   login: '/login',
-  userList: '/user',
+  userList: '/userList',
   user: (userId = ':userId') => `/user/${userId}`,
   question: (id = ':id') => `/question/${id}`,
   questionCreate: '/question/create',
